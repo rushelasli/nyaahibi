@@ -1,8 +1,10 @@
 # Development guide
 
 How to run, build, and test this repo locally. Read
-[`architecture.md`](architecture.md) first if the two-entry setup is new
-to you.
+[`architecture.md`](architecture.md) first if the hub/main entry setup
+is new to you. The portfolio app lives in
+[rushelasli/ulilhibi](https://github.com/rushelasli/ulilhibi) and has
+its own guide there.
 
 ## Prerequisites
 
@@ -13,28 +15,26 @@ to you.
 bun install
 ```
 
-## Dev servers
+## Dev server
 
 ```bash
-bun run dev        # portfolio → http://localhost:5173/
 bun run dev:hub    # hub + main + /dash + /<slug> → http://localhost:5174/
 ```
 
-Both can run at once — one port each:
-
 | URL | What you get |
 | --- | --- |
-| `http://localhost:5173/` | Portfolio |
-| `http://localhost:5173/hub.html` | Hub shell only — `/dash` & slugs fall back to the portfolio, use `dev:hub` |
 | `http://localhost:5174/` | Hub landing |
 | `http://localhost:5174/main.html` | Main-site landing (the apex `nyaahibi.web.id` interface) |
 | `http://localhost:5174/dash` | Dashboard |
 | `http://localhost:5174/nyaahibiv2` | That slug's detail page (all five work) |
 
+(The portfolio's dev server — port 5173 — lives in
+[rushelasli/ulilhibi](https://github.com/rushelasli/ulilhibi).)
+
 `dev:hub` mirrors production's layout with a dev-only middleware in
 `vite.hub.config.ts`: extensionless GET/HEAD paths are served `hub.html`
-(Vite's SPA fallback would otherwise serve the *portfolio's*
-`index.html`), and `HubApp` picks the page from the real
+(there is no `index.html` in this repo anymore — the portfolio took it
+with the split), and `HubApp` picks the page from the real
 `window.location.pathname` — the same routing the deployed site uses,
 but with HMR. Real files such as `/main.html` pass straight through.
 
@@ -61,59 +61,54 @@ bun run preview:hub
 
 | Command | Does | Output |
 | --- | --- | --- |
-| `bun run build` | `vue-tsc -b` (type-check) **then** Vite build — portfolio | `dist/` |
-| `bun run build:hub` | Vite build only — hub landing, per-slug pages, dashboard head | `dist-hub/` |
-| `bun run preview` | Serves `dist/` | — |
+| `bun run build:hub` | `vue-tsc -b` (type-check) **then** Vite build — hub landing, main site, per-slug pages, dashboard head | `dist-hub/` |
 | `bun run preview:hub` | Serves `dist-hub/` | — |
 
-Both builds must succeed before deploying — `ops/deploy.ps1` runs them in
-order and aborts on failure. The type-check gate is part of `bun run build`
-only; `build:hub` assumes types already passed.
+`build:hub` runs `vue-tsc -b` first and aborts on any type error —
+`ops/deploy.ps1` runs it + the SSR gate, so a broken type never reaches
+the live site. (`vite.config.ts` is not an app build config: it only
+supplies the Vue plugin + `@` alias to the bare `bunx vite build --ssr …`
+gate command below.)
 
 > The Tailwind build step is the slow part (~2 min on a modest box).
 > That's normal.
 
 ## Tests (SSR render gates)
 
-There is no unit-test framework. Instead, two **SSR render tests** render
-the real apps to HTML strings and assert on the output (i18n keys resolve,
+There is no unit-test framework. Instead, an **SSR render test** renders
+the real app to HTML strings — hub landing, main landing, every detail
+page, and the dashboard — and asserts on the output (i18n keys resolve,
 expected copy exists, correct links, locale parity, no dead domains).
-`deploy.ps1` refuses to deploy if either fails, so run them before pushing
-anything that touches shared code.
+`deploy.ps1` refuses to deploy if it fails, so run it before pushing
+anything that touches shared code. (The portfolio's own gate lives in
+[rushelasli/ulilhibi](https://github.com/rushelasli/ulilhibi).)
 
 ```bash
-# 1. Portfolio gate
-bunx vite build --ssr test/render.test.ts --outDir node_modules/.tmp/ssr
-node node_modules/.tmp/ssr/render.test.js
-
-# 2. Hub gate (landing + all detail pages + dashboard)
 bunx vite build --ssr test/hub.render.test.ts --outDir node_modules/.tmp/ssr-hub
 node node_modules/.tmp/ssr-hub/hub.render.test.js
 ```
 
-Expected endings: `ALL SSR RENDER CHECKS PASSED` and
-`ALL HUB RENDER CHECKS PASSED`.
+Expected ending: `ALL HUB RENDER CHECKS PASSED`.
 
 Notes:
 
 - `--outDir` **must stay inside the repo** (`node_modules/.tmp/…`). Node
   resolves imports like `vue` by walking up from the bundle — an outDir
-  under `/tmp` fails with `ERR_MODULE_NOT_FOUND`. (Ignore the older
-  command in `test/render.test.ts`'s header comment that suggests
-  `/tmp/opencode/ssr`.)
-- The tests import `test/stubs.ts` first, which stubs browser globals
+  under `/tmp` fails with `ERR_MODULE_NOT_FOUND`.
+- The test imports `test/stubs.ts` first, which stubs browser globals
   (`window`, `document`, `localStorage`, …) so SSR works in Node.
 - **Adding a new locale namespace or project?** Update the `KEY_LEAK` /
-  `ATTR_KEY_LEAK` regexes at the top of both test files — they list the
-  i18n namespaces each app renders and catch unresolved keys leaking into
-  HTML (a namespace missing from the regex won't be checked, so add it).
-  Also add detail-page expectations in `test/hub.render.test.ts` (see
+  `ATTR_KEY_LEAK` regexes at the top of `test/hub.render.test.ts` — they
+  list the i18n namespaces each app renders and catch unresolved keys
+  leaking into HTML (a namespace missing from the regex won't be checked,
+  so add it). Also add detail-page expectations in the same file (see
   [adding-a-site.md](adding-a-site.md)).
 
 ### Class-token gate (optional, local)
 
-After `bun run build`, verifies every Tailwind-looking class token used in
-`.vue` files and locale JSON actually exists in the built CSS:
+After `bun run build:hub`, verifies every Tailwind-looking class token
+used in `.vue` files and locale JSON actually exists in the built CSS
+(`dist-hub/assets`):
 
 ```bash
 python3 ops/check_classes.py
@@ -123,39 +118,41 @@ python3 ops/check_classes.py
 
 - Two locales: `id` (Indonesian, **fallback**) and `en` —
   `src/locales/id.json`, `src/locales/en.json`. Keep them at key parity;
-  the tests fail on leaked/unresolved keys.
+  the tests fail on leaked/unresolved keys. (479 keys since the
+  portfolio split — the portfolio repo keeps its own 112.)
 - Initial locale: `localStorage.locale` → browser language → `id`
   (`src/i18n.ts`).
 - A few messages contain HTML (`<a>`, `<strong>`) and are rendered with
   `v-html` — safe because locale files are static, authored content.
-- Namespace map (top-level keys of the locale files): `nav`, `hero`,
-  `about`, `projects`, `skills`, `experience`, `contact`, `footer`, `meta`,
-  `common`, per-project (`amp`, `ampgen1`, `microamp`, `furuhibi`,
-  `tubese`), plus `hub` (hub landing), `dash` (dashboard), and `main`
-  (apex landing).
+- Namespace map (top-level keys of the locale files): `nav`, `footer`,
+  per-project (`amp`, `ampgen1`, `microamp`, `furuhibi`, `tubese`), plus
+  `hub` (hub landing), `dash` (dashboard), and `main` (apex landing).
+  The profile namespaces (`hero`, `about`, `projects`, `skills`,
+  `experience`, `contact`, `meta`, `common`) moved with the portfolio to
+  [rushelasli/ulilhibi](https://github.com/rushelasli/ulilhibi).
 
 ## Theme
 
-- One theme for both apps: `src/style.css` (Tailwind v4 `@theme`, HSL
-  tokens in `:root` / `.dark`).
-- Default is **dark**; `index.html`/`hub.html`/`main.html` apply the
-  stored `localStorage.theme` before first paint to avoid a flash.
+- One theme: `src/style.css` (Tailwind v4 `@theme`, HSL tokens in
+  `:root` / `.dark`) — the portfolio repo carries a copy of the same
+  tokens (kept in sync by review).
+- Default is **dark**; `hub.html`/`main.html` apply the stored
+  `localStorage.theme` before first paint to avoid a flash.
 - `ThemeToggle` flips the `.dark` class; `LocaleToggle` switches `id`/`en`.
-  Both are shared between the apps.
+  Both are shared by the hub and main pages (and mirrored in the
+  portfolio repo).
 
 ## Repo map (quick)
 
 ```
-index.html / hub.html / main.html   the three entries (main shares the hub's main.ts)
-vite.config.ts               portfolio build
-vite.hub.config.ts           hub build (+ generates dist-hub/<slug>/ and /dash/ HTML)
-src/main.ts                  portfolio entry
-src/hub/                     hub entry: main.ts, HubApp, HubLanding, MainLanding, DashboardPage
-src/router.ts                portfolio routes (/, /projects/*)
-src/pages/                   project detail pages (shared by both apps)
-src/components/              sections + shared chrome (ThemeToggle, LocaleToggle, ui/)
-src/data/projects.ts         ★ single source of truth: hubSites, domains, card links
-src/locales/                 id.json / en.json (all copy)
-test/                        SSR render gates (+ browser stubs)
-ops/                         deploy.ps1, Caddyfile, runbook (ops/README.md)
+hub.html / main.html   the two entries (main shares the hub's main.ts)
+vite.config.ts         SSR-gate config only (Vue plugin + @ alias)
+vite.hub.config.ts     app build (+ generates dist-hub/<slug>/ and /dash/ HTML)
+src/hub/               hub entry: main.ts, HubApp, HubLanding, MainLanding, DashboardPage
+src/pages/             project detail pages
+src/components/        project/ + furuhibi/ sections + shared chrome (ThemeToggle, LocaleToggle)
+src/data/projects.ts   ★ single source of truth: hubSites, domains
+src/locales/           id.json / en.json (hub-side copy of the split keys)
+test/                  SSR render gate (+ browser stubs)
+ops/                   deploy.ps1, Caddyfile, runbook (ops/README.md)
 ```

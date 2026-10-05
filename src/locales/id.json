@@ -1,10 +1,4 @@
 {
-  "meta": {
-    "home": "Ulil Albab — Elektronik & Proyek",
-    "amp": "NyaaHibiV2 Hybrid SE — Penguat Headphone DIY",
-    "microamp": "MicroHibi AMP — Single-Ended Micro Discrete Amplifier",
-    "furuhibi": "FuruHibi — Modern Design, Analog Heritage."
-  },
   "nav": {
     "home": "Beranda",
     "about": "Tentang",
@@ -15,150 +9,6 @@
     "language": "Bahasa",
     "languageToggle": "Ganti bahasa",
     "theme": "Ganti tema"
-  },
-  "common": {
-    "close": "Tutup"
-  },
-  "hero": {
-    "eyebrow": "Ulil Albab — Hobi Elektronik",
-    "title": "Saya membuat penguat headphone, homeserver, dan keyboard kustom.",
-    "body": "Belajar elektronik lewat praktik langsung — dari penguat headphone analog dan discrete hingga IoT berbasis ESP32 serta infrastruktur rumah yang di-hosting sendiri.",
-    "ctaPrimary": "Lihat proyek",
-    "ctaSecondary": "Hubungi saya"
-  },
-  "about": {
-    "eyebrow": "Tentang",
-    "title": "Hai, saya Ulil Albab",
-    "intro": "Pemula dengan antusiasme sungguhan pada elektronik, baik <span class=\"text-foreground/90\">analog</span> maupun <span class=\"text-foreground/90\">digital</span>. Saya juga senang mempelajari <span class=\"text-foreground/90\">komputer</span>, <span class=\"text-foreground/90\">jaringan</span>, dan belakangan ini jadi penggemar <span class=\"text-foreground/90\">tabung vakum</span>.",
-    "interestsTitle": "Minat",
-    "interests": [
-      "Mendengarkan musik",
-      "Menonton anime",
-      "Mengutak-atik elektronik dan tabung vakum",
-      "Belajar komputer & jaringan"
-    ],
-    "focusTitle": "Bidang fokus",
-    "tags": [
-      "Elektronik Analog",
-      "Elektronik Digital",
-      "Komputer",
-      "Jaringan",
-      "Tabung Vakum"
-    ]
-  },
-  "projects": {
-    "eyebrow": "Proyek",
-    "title": "Karya pilihan",
-    "intro": "Tiga bidang yang selalu membuat saya kembali — elektronik audio, infrastruktur rumah, dan perangkat masukan.",
-    "seeMore": "Lihat proyek lainnya",
-    "items": [
-      {
-        "id": "amps",
-        "index": "01",
-        "title": "Penguat Headphone",
-        "description": "Serangkaian build penguat headphone — dari desain analog dan hybrid hingga op-amp discrete sepenuhnya. Fokus pada transparansi audio dan belajar lewat iterasi.",
-        "tags": ["Analog", "Op-Amp Discrete", "Tabung"]
-      },
-      {
-        "id": "servers",
-        "index": "02",
-        "title": "Homeserver & IoT",
-        "description": "Ekosistem rumah yang di-hosting sendiri: IoT terpusat, penyimpanan NAS lokal, dan layanan on-prem — kendali penuh, tanpa ketergantungan cloud.",
-        "tags": ["ESP32", "ESP8266", "Self-hosted", "NAS"],
-        "points": [
-          "IoT rumah terpusat di ESP32 & ESP8266",
-          "NAS lokal untuk backup dan media",
-          "Layanan self-hosted (web, cloud, media)"
-        ]
-      },
-      {
-        "id": "keyboards",
-        "index": "03",
-        "title": "Keyboard Mekanik Kustom",
-        "description": "Keyboard kustom dengan wiring manual dan macropad nirkabel — memadukan elektronik dengan eksperimen firmware.",
-        "tags": ["Handwire", "VIA", "ESP32 + OLED"],
-        "points": [
-          "Papan dengan wiring manual dan layout kustom",
-          "Dukungan VIA untuk konfigurasi keymap yang mudah",
-          "Macropad nirkabel berbasis ESP32 dengan layar OLED"
-        ]
-      },
-      {
-        "id": "furuhibi",
-        "index": "04",
-        "title": "FuruHibi R2R DAC",
-        "description": "DAC R2R berbasis ESP32-S3 beserta software pendukungnya — companion app Windows & Android, DSP berbasis browser, dan cloud presets dalam satu ekosistem audio.",
-        "tags": ["ESP32-S3", "R2R DAC", "DSP", "Windows / Android"],
-        "points": [
-          "Resistor-ladder DAC dengan input Bluetooth dan USB UAC",
-          "DSP PEQ, loudness, dan surround yang dikontrol dari browser",
-          "Companion app Windows & Android dengan sinkronisasi preset ke cloud"
-        ]
-      }
-    ]
-  },
-  "skills": {
-    "eyebrow": "Keahlian",
-    "title": "Apa yang saya kerjakan",
-    "intro": "Perpaduan elektronik praktik langsung, komputer, dan hobi yang apa adanya.",
-    "items": [
-      {
-        "id": "coding",
-        "label": "Koding",
-        "desc": "Skrip, web, dan proyek Python/Arduino."
-      },
-      {
-        "id": "electronics",
-        "label": "Elektronik",
-        "desc": "Analog & digital, PCB, tabung vakum, dan rangkaian yang menantang."
-      },
-      {
-        "id": "pc",
-        "label": "PC & Komputer",
-        "desc": "Pengaturan OS, optimasi, dan eksperimen perangkat lunak."
-      },
-      {
-        "id": "networking",
-        "label": "Jaringan",
-        "desc": "Pengkabelan & switching — bagian serunya saja, tanpa trauma MikroTik."
-      },
-      {
-        "id": "repair",
-        "label": "Servis Elektronik",
-        "desc": "Memperbaiki TV, radio, monitor, PC, dan laptop."
-      },
-      {
-        "id": "rest",
-        "label": "Istirahat & Mengisi Ulang",
-        "desc": "Hobi wajib. Tidur itu fitur."
-      },
-      {
-        "id": "scrolling",
-        "label": "Scrolling",
-        "desc": "Scrolling media sosial tanpa henti — kita semua melakukannya."
-      }
-    ]
-  },
-  "experience": {
-    "eyebrow": "Pengalaman",
-    "title": "Rekam jejak saya",
-    "items": [
-      {
-        "period": "2017 — Sekarang",
-        "title": "Servis Elektronik",
-        "desc": "Perbaikan TV, radio, monitor, PC, laptop, dan lainnya secara freelance."
-      },
-      {
-        "period": "2023 — Sekarang",
-        "title": "Belajar Mandiri",
-        "desc": "Mendalami penguat headphone, homeserver, dan keyboard kustom."
-      }
-    ]
-  },
-  "contact": {
-    "eyebrow": "Kontak",
-    "title": "Mari terhubung",
-    "intro": "Terbuka untuk diskusi proyek, kolaborasi, atau sekadar ngobrol soal penguat dan elektronik."
   },
   "footer": {
     "tagline": "Dibuat dengan Vue"
@@ -230,18 +80,39 @@
       {
         "title": "JFET",
         "links": [
-          { "label": "JFET Pre-Amplifiers", "href": "https://sound-au.com/articles/followers.html" },
-          { "label": "JFET + BJT Buffer", "href": "https://sound-au.com/articles/followers.html" },
-          { "label": "JFET Source Follower", "href": "https://next.gr/circuits/amplifier/simple-jfet-preamp-c21712" },
-          { "label": "Universal JFET Buffer", "href": "https://hifisonix.com/wp-content/uploads/2015/01/UBx.pdf" }
+          {
+            "label": "JFET Pre-Amplifiers",
+            "href": "https://sound-au.com/articles/followers.html"
+          },
+          {
+            "label": "JFET + BJT Buffer",
+            "href": "https://sound-au.com/articles/followers.html"
+          },
+          {
+            "label": "JFET Source Follower",
+            "href": "https://next.gr/circuits/amplifier/simple-jfet-preamp-c21712"
+          },
+          {
+            "label": "Universal JFET Buffer",
+            "href": "https://hifisonix.com/wp-content/uploads/2015/01/UBx.pdf"
+          }
         ]
       },
       {
         "title": "Nested Composite",
         "links": [
-          { "label": "Composite Amp", "href": "https://www.analog.com/en/resources/analog-dialogue/articles/composite-amplifiers-high-output-drive-capability-with-precision.html" },
-          { "label": "Nested Feedback", "href": "https://www.allaboutcircuits.com/technical-articles/composite-amplifiers-improving-phase-accuracy/" },
-          { "label": "Nested Distortion Reducer", "href": "https://www.tubecad.com/2017/04/blog0376.htm" }
+          {
+            "label": "Composite Amp",
+            "href": "https://www.analog.com/en/resources/analog-dialogue/articles/composite-amplifiers-high-output-drive-capability-with-precision.html"
+          },
+          {
+            "label": "Nested Feedback",
+            "href": "https://www.allaboutcircuits.com/technical-articles/composite-amplifiers-improving-phase-accuracy/"
+          },
+          {
+            "label": "Nested Distortion Reducer",
+            "href": "https://www.tubecad.com/2017/04/blog0376.htm"
+          }
         ]
       }
     ]
@@ -311,22 +182,36 @@
     "threeDEyebrow": "Pratinjau 3D",
     "threeDTitle": "Tampilan 3D",
     "threeDIntro": "Pratinjau 3D interaktif — seret untuk memutar, gulir untuk memperbesar. Model dimuat sesuai kebutuhan.",
-    "models": ["PCB TubeSE"],
+    "models": [
+      "PCB TubeSE"
+    ],
     "notesEyebrow": "Catatan",
     "notesTitle": "Catatan dan Referensi",
     "refs": [
       {
         "title": "Tube",
         "links": [
-          { "label": "Tube Preamp (6J1)", "href": "https://www.circuitlab.com/circuit/qe3v569hm8t9/6j1-vacuum-tube-preamp-ver1_0/" }
+          {
+            "label": "Tube Preamp (6J1)",
+            "href": "https://www.circuitlab.com/circuit/qe3v569hm8t9/6j1-vacuum-tube-preamp-ver1_0/"
+          }
         ]
       },
       {
         "title": "Step-Up Simetris",
         "links": [
-          { "label": "LT3471 Symmetric Boost Converter", "href": "https://www.alldatasheet.com/html-pdf/101718/LINER/LT3471/1079/7/LT3471.html" },
-          { "label": "Symetric Multiplier", "href": "https://www.researchgate.net/figure/a-Cockcroft-Walton-voltage-multiplier-b-Nx-multiplier-boost-converter_fig2_252413497" },
-          { "label": "Charge Pump", "href": "https://electronics.stackexchange.com/questions/143507/inverting-charge-pump-with-boost-converter-loading-characteristics" }
+          {
+            "label": "LT3471 Symmetric Boost Converter",
+            "href": "https://www.alldatasheet.com/html-pdf/101718/LINER/LT3471/1079/7/LT3471.html"
+          },
+          {
+            "label": "Symetric Multiplier",
+            "href": "https://www.researchgate.net/figure/a-Cockcroft-Walton-voltage-multiplier-b-Nx-multiplier-boost-converter_fig2_252413497"
+          },
+          {
+            "label": "Charge Pump",
+            "href": "https://electronics.stackexchange.com/questions/143507/inverting-charge-pump-with-boost-converter-loading-characteristics"
+          }
         ]
       }
     ]
@@ -387,42 +272,73 @@
       "nyaahibiamp": {
         "title": "NyaaHibi AMP",
         "desc": "Amplifier headphone NyaaHibi generasi pertama.",
-        "tags": ["Analog", "Headphone Amp", "Gen 1"]
+        "tags": [
+          "Analog",
+          "Headphone Amp",
+          "Gen 1"
+        ]
       },
       "nyaahibiv2": {
         "title": "NyaaHibiV2 AMP",
         "desc": "NyaaHibi generasi kedua — upgrade dari amplifier generasi pertama.",
-        "tags": ["Hybrid", "SMD", "TPA6120"]
+        "tags": [
+          "Hybrid",
+          "SMD",
+          "TPA6120"
+        ]
       },
       "amahibi": {
         "title": "AmaHibi",
         "desc": "Amplifier balanced berbasis TPA6120.",
-        "tags": ["Balanced", "Headphone Amp", "TPA6120"]
+        "tags": [
+          "Balanced",
+          "Headphone Amp",
+          "TPA6120"
+        ]
       },
       "microhibiamp": {
         "title": "MicroHibi",
         "desc": "Micro discrete AMP single-ended buffer.",
-        "tags": ["Discrete", "Single-Ended", "Portable"]
+        "tags": [
+          "Discrete",
+          "Single-Ended",
+          "Portable"
+        ]
       },
       "nyaaop": {
         "title": "Nyaa-OP",
         "desc": "Micro discrete op-amp berbasis buffer simetris Rod Elliot.",
-        "tags": ["Discrete", "Op-Amp", "Rod Elliot"]
+        "tags": [
+          "Discrete",
+          "Op-Amp",
+          "Rod Elliot"
+        ]
       },
       "tubeseamp": {
         "title": "NyaaTube SE",
         "desc": "Headphone amplifier tube single-ended dengan supply HV simetris.",
-        "tags": ["Tube", "Single-Ended", "HV Supply"]
+        "tags": [
+          "Tube",
+          "Single-Ended",
+          "HV Supply"
+        ]
       },
       "nyaatubefda": {
         "title": "NyaaTube FDA",
         "desc": "Headphone amplifier tube end-game — fully differential + single-ended.",
-        "tags": ["Tube", "Fully Differential"]
+        "tags": [
+          "Tube",
+          "Fully Differential"
+        ]
       },
       "furuhibi": {
         "title": "FuruHibi",
         "desc": "DAC R2R dengan IC PCM56.",
-        "tags": ["R2R DAC", "PCM56", "DSP"]
+        "tags": [
+          "R2R DAC",
+          "PCM56",
+          "DSP"
+        ]
       }
     }
   },
@@ -510,7 +426,11 @@
     "threeDEyebrow": "Pratinjau 3D",
     "threeDTitle": "Tampilan 3D",
     "threeDIntro": "Pratinjau 3D interaktif — seret untuk memutar, gulir untuk memperbesar. Model dimuat sesuai kebutuhan.",
-    "models": ["Amplifier + box", "NyaaHibiV2", "Nilai Komponen"],
+    "models": [
+      "Amplifier + box",
+      "NyaaHibiV2",
+      "Nilai Komponen"
+    ],
     "osciEyebrow": "Pengukuran",
     "osciTitle": "Uji Daya Keluar Menggunakan Oscilloscope",
     "disclaimer": "⚠️ Disclaimer: Beban 10Ω ini tidak direkomendasikan untuk penggunaan normal karena dapat membebani amplifier secara berlebihan; beban ini hanya digunakan untuk menguji daya keluar maksimum!",
@@ -522,20 +442,47 @@
           {
             "title": "Stress Test 32ohm:",
             "entries": [
-              { "label": "V/Div:", "value": "5V/Div" },
-              { "label": "Vpp:", "equation": "Div vert x V/Div" },
-              { "label": "Vpp:", "equation": "3Div x 5V/Div = 15Vpp" },
-              { "label": "Vpeak:", "equation": "Vpp / 2 = 7.5V" },
-              { "label": "Pmax:", "equation": "Vpeak² / R = 7.5² / 32 ≈ 1.76W" },
-              { "label": "Vrms:", "equation": "Vpp / (2√2) = 15 / 2.828 ≈ 5.30V" },
-              { "label": "Prms:", "equation": "Vrms² / R = 28.09 / 32 ≈ 0.878W" }
+              {
+                "label": "V/Div:",
+                "value": "5V/Div"
+              },
+              {
+                "label": "Vpp:",
+                "equation": "Div vert x V/Div"
+              },
+              {
+                "label": "Vpp:",
+                "equation": "3Div x 5V/Div = 15Vpp"
+              },
+              {
+                "label": "Vpeak:",
+                "equation": "Vpp / 2 = 7.5V"
+              },
+              {
+                "label": "Pmax:",
+                "equation": "Vpeak² / R = 7.5² / 32 ≈ 1.76W"
+              },
+              {
+                "label": "Vrms:",
+                "equation": "Vpp / (2√2) = 15 / 2.828 ≈ 5.30V"
+              },
+              {
+                "label": "Prms:",
+                "equation": "Vrms² / R = 28.09 / 32 ≈ 0.878W"
+              }
             ]
           },
           {
             "title": "Stress Test 10ohm!:",
             "entries": [
-              { "label": "Pmax:", "equation": "Vpeak² / R = 7.5² / 10 ≈ 5.63W!" },
-              { "label": "Prms:", "equation": "Vrms² / R = 28.09 / 10 ≈ 2.81W!" }
+              {
+                "label": "Pmax:",
+                "equation": "Vpeak² / R = 7.5² / 10 ≈ 5.63W!"
+              },
+              {
+                "label": "Prms:",
+                "equation": "Vrms² / R = 28.09 / 10 ≈ 2.81W!"
+              }
             ],
             "showDisclaimer": true
           }
@@ -548,20 +495,47 @@
           {
             "title": "Stress Test 32Ω:",
             "entries": [
-              { "label": "V/Div:", "value": "2V/Div" },
-              { "label": "Vpp:", "equation": "Div vert x V/Div" },
-              { "label": "Vpp:", "equation": "4.2Div x 2V/Div = 8.4Vpp" },
-              { "label": "Vpeak:", "equation": "Vpp / 2 = 4.2V" },
-              { "label": "Pmax:", "equation": "Vpeak² / R = 4.2² / 32 ≈ 0.551W" },
-              { "label": "Vrms:", "equation": "Vpp / (2√2) = 8.4 / 2.828 ≈ 2.97V" },
-              { "label": "Prms:", "equation": "Vrms² / R = 2.97² / 32 ≈ 0.276W" }
+              {
+                "label": "V/Div:",
+                "value": "2V/Div"
+              },
+              {
+                "label": "Vpp:",
+                "equation": "Div vert x V/Div"
+              },
+              {
+                "label": "Vpp:",
+                "equation": "4.2Div x 2V/Div = 8.4Vpp"
+              },
+              {
+                "label": "Vpeak:",
+                "equation": "Vpp / 2 = 4.2V"
+              },
+              {
+                "label": "Pmax:",
+                "equation": "Vpeak² / R = 4.2² / 32 ≈ 0.551W"
+              },
+              {
+                "label": "Vrms:",
+                "equation": "Vpp / (2√2) = 8.4 / 2.828 ≈ 2.97V"
+              },
+              {
+                "label": "Prms:",
+                "equation": "Vrms² / R = 2.97² / 32 ≈ 0.276W"
+              }
             ]
           },
           {
             "title": "Stress Test 10Ω!:",
             "entries": [
-              { "label": "Pmax:", "equation": "Vpeak² / R = 4.2² / 10 ≈ 1.76W" },
-              { "label": "Prms:", "equation": "Vrms² / R = 2.97² / 10 ≈ 0.882W" }
+              {
+                "label": "Pmax:",
+                "equation": "Vpeak² / R = 4.2² / 10 ≈ 1.76W"
+              },
+              {
+                "label": "Prms:",
+                "equation": "Vrms² / R = 2.97² / 10 ≈ 0.882W"
+              }
             ],
             "showDisclaimer": true
           }
@@ -574,25 +548,52 @@
       {
         "title": "JFET",
         "links": [
-          { "label": "JFET Pre-Amplifiers", "href": "https://sound-au.com/articles/followers.html" },
-          { "label": "JFET + BJT Buffer", "href": "https://sound-au.com/articles/followers.html" },
-          { "label": "JFET Source Follower", "href": "https://next.gr/circuits/amplifier/simple-jfet-preamp-c21712" },
-          { "label": "Universal JFET Buffer", "href": "https://hifisonix.com/wp-content/uploads/2015/01/UBx.pdf" }
+          {
+            "label": "JFET Pre-Amplifiers",
+            "href": "https://sound-au.com/articles/followers.html"
+          },
+          {
+            "label": "JFET + BJT Buffer",
+            "href": "https://sound-au.com/articles/followers.html"
+          },
+          {
+            "label": "JFET Source Follower",
+            "href": "https://next.gr/circuits/amplifier/simple-jfet-preamp-c21712"
+          },
+          {
+            "label": "Universal JFET Buffer",
+            "href": "https://hifisonix.com/wp-content/uploads/2015/01/UBx.pdf"
+          }
         ]
       },
       {
         "title": "Nested Composite",
         "links": [
-          { "label": "Composite Amp", "href": "https://www.analog.com/en/resources/analog-dialogue/articles/composite-amplifiers-high-output-drive-capability-with-precision.html" },
-          { "label": "Nested Feedback", "href": "https://www.allaboutcircuits.com/technical-articles/composite-amplifiers-improving-phase-accuracy/" },
-          { "label": "Nested Distortion Reducer", "href": "https://www.tubecad.com/2017/04/blog0376.htm" }
+          {
+            "label": "Composite Amp",
+            "href": "https://www.analog.com/en/resources/analog-dialogue/articles/composite-amplifiers-high-output-drive-capability-with-precision.html"
+          },
+          {
+            "label": "Nested Feedback",
+            "href": "https://www.allaboutcircuits.com/technical-articles/composite-amplifiers-improving-phase-accuracy/"
+          },
+          {
+            "label": "Nested Distortion Reducer",
+            "href": "https://www.tubecad.com/2017/04/blog0376.htm"
+          }
         ]
       },
       {
         "title": "Step-Up Simetris",
         "links": [
-          { "label": "LT3471 Symmetric Boost Converter", "href": "https://www.alldatasheet.com/html-pdf/101718/LINER/LT3471/1079/7/LT3471.html" },
-          { "label": "Charge Pump", "href": "https://electronics.stackexchange.com/questions/143507/inverting-charge-pump-with-boost-converter-loading-characteristics" }
+          {
+            "label": "LT3471 Symmetric Boost Converter",
+            "href": "https://www.alldatasheet.com/html-pdf/101718/LINER/LT3471/1079/7/LT3471.html"
+          },
+          {
+            "label": "Charge Pump",
+            "href": "https://electronics.stackexchange.com/questions/143507/inverting-charge-pump-with-boost-converter-loading-characteristics"
+          }
         ]
       }
     ]
@@ -713,10 +714,22 @@
     "productTitle": "Resistor-ladder DAC, dikendalikan penuh secara digital.",
     "productDesc": "Dibangun di atas ESP32-S3, FuruHibi R2R menggabungkan jalur DAC R2R dengan penerimaan Bluetooth, USB Audio Class, dan tampilan OLED — dikendalikan lewat companion app Windows dan Android.",
     "specs": [
-      { "label": "Platform", "value": "ESP32-S3" },
-      { "label": "Input", "value": "Bluetooth · USB UAC" },
-      { "label": "Kontrol", "value": "OLED GUI + Companion App" },
-      { "label": "DSP", "value": "PEQ · Loudness · Surround" }
+      {
+        "label": "Platform",
+        "value": "ESP32-S3"
+      },
+      {
+        "label": "Input",
+        "value": "Bluetooth · USB UAC"
+      },
+      {
+        "label": "Kontrol",
+        "value": "OLED GUI + Companion App"
+      },
+      {
+        "label": "DSP",
+        "value": "PEQ · Loudness · Surround"
+      }
     ],
     "productCta": "Get the Companion App",
     "productAlt": "Diagram arsitektur pipeline audio FuruHibi R2R",
@@ -792,13 +805,21 @@
         "kanji": "古",
         "word": "Furu",
         "desc": "Vintage. Heritage. Memory — karakter suara dari masa lalu yang tetap dijaga.",
-        "tags": ["Vintage", "Heritage", "Memory"]
+        "tags": [
+          "Vintage",
+          "Heritage",
+          "Memory"
+        ]
       },
       {
         "kanji": "日々",
         "word": "Hibi",
         "desc": "Everyday. Music. Life — hadir dalam keseharian mendengarkan musik.",
-        "tags": ["Everyday", "Music", "Life"]
+        "tags": [
+          "Everyday",
+          "Music",
+          "Life"
+        ]
       }
     ],
     "philLine": "Modern Design, Analog Heritage.",
@@ -809,7 +830,11 @@
     "updatesEyebrow": "Latest Updates",
     "updatesTitle": "Firmware, driver & app updates.",
     "updates": [
-      { "tag": "App", "desc": "Companion app Windows dan Android diperbarui ke versi 1.1.", "version": "v1.1" },
+      {
+        "tag": "App",
+        "desc": "Companion app Windows dan Android diperbarui ke versi 1.1.",
+        "version": "v1.1"
+      },
       {
         "tag": "App",
         "desc": "Rilis awal companion app FuruHibi R2R untuk Windows dan Android.",

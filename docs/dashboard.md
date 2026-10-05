@@ -49,9 +49,9 @@ so neither `dist-hub\dash\` nor the server folder is touched by it):
 
 ## Local preview
 
-The dashboard only exists inside the **hub build output**, so it does not
-work in `bun run dev` (the path falls back to the portfolio — see
-[`development.md`](development.md)):
+The dashboard only exists inside the **hub build output**, so it's only
+reachable under `bun run dev:hub` (port 5174) or `preview:hub` — see
+[`development.md`](development.md):
 
 ```bash
 bun run build:hub
@@ -86,5 +86,6 @@ never come back. Run it with the commands in
   its own domain (e.g. the apex pointing at `/dash/` instead), that's a
   Caddy + Cloudflare change only — the page already builds independently.
   If it ever needs **private secrets
-  or a backend**, that's the trigger to move it to a separate private
-  repo (see [`architecture.md`](architecture.md) → "Why not split").
+  or a backend**, that's the trigger to give it its own private repo —
+  the same move the portfolio made (see
+  [`architecture.md`](architecture.md) → "The split with the portfolio").

@@ -2,7 +2,7 @@
 """Class-ecosystem check: every Tailwind-looking class token used in .vue
 files (and in the locale HTML strings) must exist in the built CSS.
 
-Local gate — run after `bun run build`:
+Local gate — run after `bun run build:hub`:
     python3 ops/check_classes.py
 """
 import re
@@ -10,9 +10,9 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-css_files = sorted((ROOT / 'dist/assets').glob('*.css'))
+css_files = sorted((ROOT / 'dist-hub/assets').glob('*.css'))
 if not css_files:
-    print('no built CSS found in dist/assets — run `bun run build` first')
+    print('no built CSS found in dist-hub/assets — run `bun run build:hub` first')
     sys.exit(2)
 CSS = ''.join(p.read_text(encoding='utf-8') for p in css_files)
 

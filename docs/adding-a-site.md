@@ -70,10 +70,10 @@ The page shown at `/<slug>/`:
    both locale files) — or reuse an existing project namespace if it's a
    variant of an existing page.
 
-The portfolio also has **legacy** `/projects/*` routes
-(`src/router.ts` + `src/pages/`); new live sites don't need them — the
-hub is the front door, the portfolio just links out via `projectLinks`
-(step 5).
+The legacy `/projects/*` routes retired with the portfolio split — this
+repo keeps only the hub's detail pages; the portfolio
+([rushelasli/ulilhibi](https://github.com/rushelasli/ulilhibi)) links
+out via its own `projectLinks` copy (step 5).
 
 ### 4. Add test coverage
 
@@ -94,8 +94,9 @@ const detailMarkers: Record<string, string> = {
 - A `live` slug **without** a `detailPages` entry → test fails
   (`live slug myslug has no detail-page test entry`).
 - A detail page whose namespace isn't in the `KEY_LEAK` /
-  `ATTR_KEY_LEAK` regexes (top of both test files) → unresolved i18n keys
-  could slip through silently. Add the namespace to those regexes.
+  `ATTR_KEY_LEAK` regexes (top of `test/hub.render.test.ts`) →
+  unresolved i18n keys could slip through silently. Add the namespace to
+  those regexes (the portfolio repo keeps its own copy of them).
 
 Run the gate (see [`development.md`](development.md)):
 
@@ -104,7 +105,9 @@ bunx vite build --ssr test/hub.render.test.ts --outDir node_modules/.tmp/ssr-hub
 node node_modules/.tmp/ssr-hub/hub.render.test.js
 ```
 
-### 5. (Optional) Link it from the portfolio
+### 5. (Optional) Link it from the portfolio (other repo)
+
+In [rushelasli/ulilhibi](https://github.com/rushelasli/ulilhibi):
 
 ```ts
 // src/data/projects.ts — portfolio home card
@@ -113,9 +116,9 @@ projectLinks: {
 }
 ```
 
-Policy (enforced by `test/render.test.ts`): live projects link to their
-hub detail page — the hub is the single front door. Retired subdomains
-must never reappear in copy.
+Policy (enforced by that repo's `test/render.test.ts`): live projects
+link to their hub detail page — the hub is the single front door.
+Retired subdomains must never reappear in copy.
 
 ### 6. (Optional) Dashboard extras
 

@@ -1,29 +1,31 @@
-# Architecture — one repo, two websites (plus a dashboard page)
+# Architecture — one repo, two sites from one bundle
 
-This repo builds **two separate static websites** from one shared `src/`
-tree. This document explains how, and records *why it is deliberately not
-split into multiple repos* — so the question doesn't have to be reopened.
+This repo builds **two separate static websites** from a single shared
+Vue app, and records how the Oct 2026 **split** with the portfolio
+(now `rushelasli/ulilhibi`) draws the boundary between the two repos.
 
 ## The entries
 
 ```
 hibi/
-├── index.html   ──► src/main.ts    ──► Vue app + vue-router  ──► dist/       ──► ulilhibi.my.id
 ├── hub.html     ──► src/hub/main.ts ──► Vue app, NO router    ──► dist-hub/  ──► project.nyaahibi.web.id
 └── main.html    ──► src/hub/main.ts ──► same app, site=main   ──► dist-hub/  ──► nyaahibi.web.id (apex)
 ```
 
-Three HTML files sharing two `main.ts` entry points (`main.html` reuses the
-hub's, declaring its variant via `<meta name="site" content="main">`), two
-Vite configs (`vite.config.ts` and `vite.hub.config.ts`), two build scripts
-(`bun run build` and `bun run build:hub`). Everything else is shared.
+Two HTML files, **one** `main.ts` entry point (`main.html` reuses the
+hub's, declaring its variant via `<meta name="site" content="main">`),
+one app config (`vite.hub.config.ts`), one build script
+(`bun run build:hub`). A second `vite.config.ts` exists only so the bare
+SSR gate command (`bunx vite build --ssr test/…`) has the Vue plugin and
+the `@` alias — no app build uses it.
 
-| | Portfolio (`ulilhibi.my.id`) | Hub (`project.nyaahibi.web.id` + apex) |
+| | Hub (`project.nyaahibi.web.id`) | Main site (apex `nyaahibi.web.id`) |
 | --- | --- | --- |
-| Entry | `index.html` → `src/main.ts` | `hub.html` / `main.html` → `src/hub/main.ts` |
-| Routing | vue-router (`src/router.ts`) | **None** — `HubApp` reads `window.location.pathname` and picks a view |
-| Pages | `src/pages/HomePage.vue` + legacy `/projects/*` mirrors | Landing (`HubLanding`), main landing (`MainLanding`), 5 project detail pages + `/dash/` |
-| Build | `vite.config.ts` → `dist/` | `vite.hub.config.ts` → `dist-hub/` |
+| Entry | `hub.html` (no `site` meta → `site=hub`) | `main.html` (`<meta name="site" content="main">`) |
+| Landing | `HubLanding` — cards for every `hubSites` entry | `MainLanding` — what NyaaHibi is + gateways |
+| Deep links | `/dash/`, `/<slug>/` (detail pages) | same paths — same content root |
+| Routing | **None** — `HubApp` reads `window.location.pathname` and picks a view | same app |
+| Build | `vite.hub.config.ts` → `dist-hub/` | shares it |
 
 ### Why the hub has no router
 
@@ -46,67 +48,67 @@ anything else    → the entry's own landing ("soon" slugs land on HubLanding)
 those files onto the server's folders; `dist-hub/main.html` ships with the
 root mirror as-is (the apex Caddy block serves it at `/`).
 
-## What the two apps share
+## The split with the portfolio (Oct 2026)
+
+The personal profile site — originally this repo's `index.html` app —
+moved to **[rushelasli/ulilhibi](https://github.com/rushelasli/ulilhibi)**.
+The boundary:
+
+| | This repo (hub + main) | `rushelasli/ulilhibi` (portfolio) |
+| --- | --- | --- |
+| Entries | `hub.html`, `main.html` | `index.html` + vue-router |
+| Pages | `src/hub/*`, 5 detail pages, `project/` + `furuhibi/` sections | home page + profile sections, `ui/` components |
+| Locale keys | `nav`, `footer`, `hub.*`, `dash.*`, `main.*`, per-project namespaces (479 keys) | `meta`, `nav`, `common`, profile namespaces (112 keys) |
+| Registry | `hubSites` + base URLs | `projectLinks` + base URLs |
+| Build | `bun run build:hub` → `dist-hub/` | `bun run build` → `dist/` |
+| Deploy | `ops/deploy.ps1` → `C:\srv\sites\projects` | its own `ops/deploy.ps1` → `C:\srv\sites\hibi` |
+| SSR gate | `test/hub.render.test.ts` | its own `test/render.test.ts` |
+
+What is deliberately duplicated (kept in sync by review, not tooling):
+`src/style.css` theme tokens, `ThemeToggle` + `LocaleToggle`, the
+`nav`/`footer` locale namespaces, and the base-URL constants in
+`src/data/projects.ts`. The legacy `/projects/*` mirrors retired with the
+split — this repo keeps the pages the hub renders (`src/pages/`), the
+portfolio keeps only `/`.
+
+## What's still shared inside this repo
 
 - **`src/data/projects.ts` — the single source of truth.** `hubSites`
   drives the landing cards, the dashboard cards, the deploy script's live
   slug list, the per-slug HTML generation, and the test assertions.
-  `PROJECTS_BASE` / `PORTFOLIO_BASE` hold the two domains.
-- **`src/locales/en.json` + `id.json`** — all copy for both apps
-  (namespaces like `hub.*`, `dash.*`, `main.*`, plus per-project `amp.*`,
-  `furuhibi.*`).
-- **`src/pages/*.vue` + `src/components/`** — the project detail pages are
-  the *same Vue components* on both sites (the portfolio's `/projects/amp`
-  and the hub's `/nyaahibiv2/` are `AmpProject.vue`). Shared chrome:
+  `PROJECTS_BASE` / `PORTFOLIO_BASE` hold the two outbound domains.
+- **`src/locales/en.json` + `id.json`** — hub copy (`hub.*`, `dash.*`,
+  `main.*`, per-project `amp.*`, `furuhibi.*`, …).
+- **`src/pages/*.vue` + `src/components/`** — the project detail pages
+  render on both the hub and the main site. Shared chrome:
   `ThemeToggle`, `LocaleToggle`.
 - **`src/style.css`** — one Tailwind v4 theme (tokens, dark variant,
   fonts) used by both entries.
-- **`test/`** — two SSR render gates that render the real apps and assert
+- **`test/`** — an SSR render gate that renders the real app and asserts
   on the HTML (see `docs/development.md`).
-- **`ops/deploy.ps1`** — one script builds *and deploys both* sites in a
-  fixed order.
-
-## Why not split into separate repos
-
-Considered and rejected (Oct 2026). Splitting would require:
-
-1. A shared package (published or vendored) for pages/locales/theme/data —
-   because the hub's detail pages *are* portfolio components.
-2. Two deploy pipelines replacing the single `deploy.ps1` that currently
-   builds both and mirrors them in the correct order.
-3. Test orchestration across repos, while today one script runs both gates.
-
-The coupling is total and intentional; a split adds moving parts without
-reducing any real maintenance burden.
-
-**The one condition that would change this:** if the dashboard (or any
-future site in this repo) needs **private secrets or a backend** — this is
-a *public* repo, so secrets must never live in it (see `ops/README.md`
-"Safety rules"). A private app should be a separate private repo. Until
-then: one repo, multiple entries. If the flat root ever gets unwieldy,
-prefer a bun-workspace layout (`apps/portfolio`, `apps/hub`,
-`packages/shared`) *within this repo* before considering a split.
+- **`ops/deploy.ps1`** — builds *and deploys* both hostnames in a fixed
+  order.
 
 ## Domain map
 
 | Domain | Serves | Notes |
 | --- | --- | --- |
-| `ulilhibi.my.id` | Portfolio (`dist/`) | Moved here from the old apex (see below) |
+| `ulilhibi.my.id` | Portfolio (`dist/` from **rushelasli/ulilhibi**) | Moved here from the old apex; that repo deploys it |
 | `project.nyaahibi.web.id` | Hub landing + `/<slug>/` folders + `/dash/` (`dist-hub/` + per-site clones) | One subdomain, path routing |
 | `nyaahibi.web.id` | Main site — explanatory landing (`dist-hub/main.html`) at the root | Same content root as the hub: `/dash` and `/<slug>` deep links resolve here too; `project.` stays canonical in code |
 
-`PORTFOLIO_BASE` in `src/data/projects.ts` and the `og:url` tag in
-`index.html` must always match the live portfolio domain.
+`PROJECTS_BASE` / `PORTFOLIO_BASE` in `src/data/projects.ts` and the
+`og:url` heads must always match the live domains — in **both** repos.
 
 ## Where each build lands on the server
 
 ```
-C:\srv\sites\hibi       ← dist/          (portfolio)
+C:\srv\sites\hibi       ← dist/          (portfolio — deployed by rushelasli/ulilhibi)
 C:\srv\sites\projects   ← dist-hub/      (hub landing at root, main.html alongside)
     ├── <slug>/         ← per-site clones, with dist-hub/<slug>/index.html overlaid
     └── dash/           ← legacy box-side assets, with dist-hub/dash/index.html overlaid
 ```
 
 The overlay pattern is why detail pages and the dashboard can be rebuilt
-from this repo while their assets (GLB models, downloads, `comingsoon.html`)
-stay box-side. Full runbook: `ops/README.md`.
+from this repo while their assets (GLB models, downloads,
+`comingsoon.html`) stay box-side. Full runbook: `ops/README.md`.
