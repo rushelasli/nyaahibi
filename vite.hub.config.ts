@@ -3,8 +3,8 @@ import tailwindcss from '@tailwindcss/vite'
 import { defineConfig, type Plugin } from 'vite'
 import path from 'path'
 import fs from 'node:fs'
-import { hubSites, PROJECTS_BASE } from './src/data/projects'
-import en from './src/locales/en.json'
+import { hubSites, PROJECTS_BASE } from './src/data/projects.ts'
+import en from './src/locales/en.json' with { type: 'json' }
 
 // Second entry: the projects-hub landing page served at
 // https://project.nyaahibi.web.id (built separately into dist-hub/).
