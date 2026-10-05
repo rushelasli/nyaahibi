@@ -39,7 +39,7 @@ ALLOW = {
     'amp-family', 'asal-asalan', 'benar-benar', 'browser-based',
     'class-variance-authority',
     'di-hosting', 'di-upgrade', 'end-game', 'first-gen', 'first-generation',
-    'full-SMD', 'hands-on', 'high-', 'high-performance', 'high-voltage',
+    'full-SMD', 'hands-on', 'hand-made', 'high-', 'high-performance', 'high-voltage',
     'hybrid-architecture', 'language-dependent',
     'low-impedance', 'low-voltage', 'masing-masing', 'on-prem', 'op-amp',
     'power-efficient', 'projectLinks[id]', 'real-time', 'resistor-ladder',
@@ -49,6 +49,8 @@ ALLOW = {
     'vue-router',
     # Intl locale identifiers (DashboardPage server clock)
     'en-GB', 'en-US', 'id-ID',
+    # Main-landing section ids (HTML ids, not classes)
+    'main-hero', 'main-about', 'main-gateways', 'main-featured',
 }
 
 def in_css(tok: str) -> bool:

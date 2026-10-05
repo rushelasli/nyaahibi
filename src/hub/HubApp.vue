@@ -4,6 +4,7 @@ import { useI18n } from 'vue-i18n'
 import ThemeToggle from '@/components/ThemeToggle.vue'
 import LocaleToggle from '@/components/LocaleToggle.vue'
 import HubLanding from '@/hub/HubLanding.vue'
+import MainLanding from '@/hub/MainLanding.vue'
 import DashboardPage from '@/hub/DashboardPage.vue'
 import { hubSites, PORTFOLIO_BASE, type HubSite } from '@/data/projects'
 import AmpProject from '@/pages/AmpProject.vue'
@@ -16,6 +17,10 @@ const props = defineProps<{
   /** window.location.pathname — the hub has no router, so the entry
    *  passes the URL directly; "/" (or anything unknown) renders the landing. */
   initialPath?: string
+  /** Which entry HTML mounted the app: "hub" (project.nyaahibi.web.id)
+   *  renders the projects landing at the root, "main" (the apex
+   *  nyaahibi.web.id interface) the explanatory landing. */
+  site?: 'hub' | 'main'
 }>()
 
 const { t, locale } = useI18n()
@@ -63,12 +68,14 @@ const isDash = computed(() => detailPath.value === '/dash')
 
 function syncDocumentMeta() {
   document.documentElement.lang = locale.value
-  const site = detailSite.value
+  const detail = detailSite.value
   document.title = isDash.value
     ? `${t('dash.metaTitle')} — ${t('hub.title')}`
-    : site
-      ? `${t(`hub.sites.${site.slug}.title`)} — ${t('hub.title')}`
-      : t('hub.metaTitle')
+    : detail
+      ? `${t(`hub.sites.${detail.slug}.title`)} — ${t('hub.title')}`
+      : props.site === 'main'
+        ? t('main.metaTitle')
+        : t('hub.metaTitle')
 }
 
 onMounted(syncDocumentMeta)
@@ -109,7 +116,9 @@ watch(locale, syncDocumentMeta)
       </header>
 
       <!-- Dashboard at /dash/, detail page for the five live sites (back
-           goes to the hub landing); anything else renders the landing -->
+           goes to the hub landing); anything else renders the landing —
+           the explanatory main site when the entry says so, the projects
+           landing otherwise -->
       <DashboardPage v-if="isDash" />
       <component
         v-else-if="detailEntry"
@@ -118,6 +127,7 @@ watch(locale, syncDocumentMeta)
         v-bind="detailEntry.props"
         back-href="/"
       />
+      <MainLanding v-else-if="site === 'main'" />
       <HubLanding v-else />
 
       <footer>

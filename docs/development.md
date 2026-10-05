@@ -17,7 +17,7 @@ bun install
 
 ```bash
 bun run dev        # portfolio → http://localhost:5173/
-bun run dev:hub    # hub (landing, /dash, /<slug>) → http://localhost:5174/
+bun run dev:hub    # hub + main + /dash + /<slug> → http://localhost:5174/
 ```
 
 Both can run at once — one port each:
@@ -27,6 +27,7 @@ Both can run at once — one port each:
 | `http://localhost:5173/` | Portfolio |
 | `http://localhost:5173/hub.html` | Hub shell only — `/dash` & slugs fall back to the portfolio, use `dev:hub` |
 | `http://localhost:5174/` | Hub landing |
+| `http://localhost:5174/main.html` | Main-site landing (the apex `nyaahibi.web.id` interface) |
 | `http://localhost:5174/dash` | Dashboard |
 | `http://localhost:5174/nyaahibiv2` | That slug's detail page (all five work) |
 
@@ -35,7 +36,7 @@ Both can run at once — one port each:
 (Vite's SPA fallback would otherwise serve the *portfolio's*
 `index.html`), and `HubApp` picks the page from the real
 `window.location.pathname` — the same routing the deployed site uses,
-but with HMR.
+but with HMR. Real files such as `/main.html` pass straight through.
 
 Box-only files don't exist in the repo, and dev mirrors production's
 `try_files` fallback for them: `/furuhibi/dsp.html`,
@@ -130,25 +131,26 @@ python3 ops/check_classes.py
 - Namespace map (top-level keys of the locale files): `nav`, `hero`,
   `about`, `projects`, `skills`, `experience`, `contact`, `footer`, `meta`,
   `common`, per-project (`amp`, `ampgen1`, `microamp`, `furuhibi`,
-  `tubese`), plus `hub` (landing) and `dash` (dashboard).
+  `tubese`), plus `hub` (hub landing), `dash` (dashboard), and `main`
+  (apex landing).
 
 ## Theme
 
 - One theme for both apps: `src/style.css` (Tailwind v4 `@theme`, HSL
   tokens in `:root` / `.dark`).
-- Default is **dark**; `index.html`/`hub.html` apply the stored
-  `localStorage.theme` before first paint to avoid a flash.
+- Default is **dark**; `index.html`/`hub.html`/`main.html` apply the
+  stored `localStorage.theme` before first paint to avoid a flash.
 - `ThemeToggle` flips the `.dark` class; `LocaleToggle` switches `id`/`en`.
   Both are shared between the apps.
 
 ## Repo map (quick)
 
 ```
-index.html / hub.html        the two entries
+index.html / hub.html / main.html   the three entries (main shares the hub's main.ts)
 vite.config.ts               portfolio build
 vite.hub.config.ts           hub build (+ generates dist-hub/<slug>/ and /dash/ HTML)
 src/main.ts                  portfolio entry
-src/hub/                     hub entry: main.ts, HubApp, HubLanding, DashboardPage
+src/hub/                     hub entry: main.ts, HubApp, HubLanding, MainLanding, DashboardPage
 src/router.ts                portfolio routes (/, /projects/*)
 src/pages/                   project detail pages (shared by both apps)
 src/components/              sections + shared chrome (ThemeToggle, LocaleToggle, ui/)

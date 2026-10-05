@@ -7,12 +7,12 @@ const { createSSRApp } = await import('vue')
 const { renderToString } = await import('@vue/server-renderer')
 const { default: i18n } = await import('@/i18n')
 const { default: HubApp } = await import('@/hub/HubApp.vue')
-const { hubSites, PORTFOLIO_BASE } = await import('@/data/projects')
+const { hubSites, PORTFOLIO_BASE, PROJECTS_BASE } = await import('@/data/projects')
 
 // Unresolved vue-i18n keys leak into the HTML as e.g. ">hub.title"
-const KEY_LEAK = />(nav|hub|footer|common|meta|amp|microamp|furuhibi|ampgen1|tubese|dash)\.[a-zA-Z]/
+const KEY_LEAK = />(nav|hub|footer|common|meta|amp|microamp|furuhibi|ampgen1|tubese|dash|main)\.[a-zA-Z]/
 // ... or into attribute values as e.g. alt="hub.sites.x"
-const ATTR_KEY_LEAK = /"(nav|hub|footer|common|meta|amp|microamp|furuhibi|ampgen1|tubese|dash)\.[a-zA-Z]/
+const ATTR_KEY_LEAK = /"(nav|hub|footer|common|meta|amp|microamp|furuhibi|ampgen1|tubese|dash|main)\.[a-zA-Z]/
 
 const outputs: Record<string, string> = {}
 const failures: string[] = []
@@ -350,8 +350,68 @@ for (const locale of ['id', 'en'] as const) {
   }
 }
 
+// ---------------------------------------------------------------------------
+// Main site — the apex (nyaahibi.web.id) interface: site=main renders the
+// explanatory landing at the root, on the shared hub chrome, with gateways
+// out to the hub, the dashboard, and the portfolio.
+for (const locale of ['id', 'en'] as const) {
+  const tag = `main:${locale}`
+  try {
+    i18n.global.locale.value = locale
+    const app = createSSRApp(HubApp, { initialPath: '/', site: 'main' })
+    app.use(i18n)
+
+    const html = await renderToString(app)
+    detailOutputs[tag] = html
+
+    if (html.length < 500) failures.push(`${tag}: suspiciously short render (${html.length} chars)`)
+
+    const leak = html.match(KEY_LEAK)
+    if (leak) failures.push(`${tag}: unresolved i18n key leaked -> ${leak[0]}`)
+    const attrLeak = html.match(ATTR_KEY_LEAK)
+    if (attrLeak) failures.push(`${tag}: unresolved key in attribute -> ${attrLeak[0]}`)
+
+    // Shared chrome survives the page swap
+    if (!html.includes('/logo.png')) failures.push(`${tag}: navbar logo missing`)
+    if (!rendered(html, i18n.global.t('nav.theme'))) failures.push(`${tag}: theme toggle missing`)
+    if (!rendered(html, i18n.global.t('nav.languageToggle'))) failures.push(`${tag}: language toggle missing`)
+
+    // Explainer copy, section by section
+    if (!html.includes('id="main-hero"')) failures.push(`${tag}: hero section missing`)
+    if (!rendered(html, i18n.global.t('main.intro'))) failures.push(`${tag}: intro copy missing`)
+    if (!html.includes('id="main-about"')) failures.push(`${tag}: about section missing`)
+    if (!rendered(html, i18n.global.t('main.aboutP1'))) failures.push(`${tag}: about paragraph 1 missing`)
+    if (!html.includes('id="main-gateways"')) failures.push(`${tag}: gateways section missing`)
+    if (!html.includes('id="main-featured"')) failures.push(`${tag}: featured section missing`)
+
+    // The three gateways: hub catalog, dashboard, portfolio
+    if (!html.includes(`href="${PROJECTS_BASE}"`)) failures.push(`${tag}: catalog gateway missing`)
+    if (!html.includes(`href="${PROJECTS_BASE}/dash"`)) failures.push(`${tag}: dashboard gateway missing`)
+    if (!html.includes(`href="${PORTFOLIO_BASE}"`)) failures.push(`${tag}: portfolio gateway missing`)
+    if (!rendered(html, i18n.global.t('main.catalogTitle'))) failures.push(`${tag}: catalog card missing`)
+    if (!rendered(html, i18n.global.t('main.dashTitle'))) failures.push(`${tag}: dash card missing`)
+    if (!rendered(html, i18n.global.t('main.creatorTitle'))) failures.push(`${tag}: creator card missing`)
+
+    // Featured cards link to the hub (absolute), not relative slugs
+    if (!rendered(html, i18n.global.t('main.featuredTitle'))) failures.push(`${tag}: featured title missing`)
+    for (const site of hubSites.filter((s) => s.status === 'live')) {
+      if (!html.includes(`href="${PROJECTS_BASE}/${site.slug}"`)) {
+        failures.push(`${tag}: featured link for ${site.slug} missing`)
+      }
+    }
+
+    // Neither landing takes over the main page, and no dead links return
+    if (html.includes('id="hero"')) failures.push(`${tag}: hub landing rendered on the main site`)
+    if (html.includes('id="live"')) failures.push(`${tag}: hub project grid rendered on the main site`)
+    if (html.includes('nggonku')) failures.push(`${tag}: dead nggonku link still present`)
+    if (html.includes('furuhibi.nyaahibi.web.id')) failures.push(`${tag}: retired furuhibi subdomain still linked`)
+  } catch (e) {
+    failures.push(`${tag}: THREW ${(e as Error).stack ?? e}`)
+  }
+}
+
 // Per page, the two locales must produce genuinely different HTML
-for (const slug of [...Object.keys(detailPages), 'dash']) {
+for (const slug of [...Object.keys(detailPages), 'dash', 'main']) {
   const idHtml = detailOutputs[`${slug}:id`]
   const enHtml = detailOutputs[`${slug}:en`]
   if (idHtml && enHtml && idHtml === enHtml) {

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="id" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="site" content="main" />
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="apple-touch-icon" href="/logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="The home of NyaaHibi — DIY audio hardware projects (amplifiers, DACs, and more) by Ulil Albab. Start here for the projects, dashboard, and portfolio."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="NyaaHibi — DIY Audio Projects by Ulil Albab" />
+    <meta
+      property="og:description"
+      content="The home of NyaaHibi — DIY audio hardware projects (amplifiers, DACs, and more) by Ulil Albab."
+    />
+    <meta property="og:image" content="https://nyaahibi.web.id/logo.png" />
+    <meta property="og:url" content="https://nyaahibi.web.id/" />
+    <title>NyaaHibi — DIY Audio Projects by Ulil Albab</title>
+    <script>
+      // Apply the stored theme before first paint (default: dark)
+      try {
+        if (localStorage.getItem('theme') === 'light') document.documentElement.classList.remove('dark')
+      } catch (e) {}
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/hub/main.ts"></script>
+  </body>
+</html>

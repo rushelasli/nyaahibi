@@ -22,13 +22,32 @@ ulilhibi.my.id:8080 {
 
 # Projects hub: one subdomain + path routing (/furuhibi, /nyaahibiv2, ...).
 # Landing page (dist-hub) sits at the root; each site is a folder under
-# C:/srv/sites/projects. The apex (nyaahibi.web.id) is an alias of the
-# same content; project.nyaahibi.web.id stays the canonical URL in code.
-project.nyaahibi.web.id:8080, nyaahibi.web.id:8080 {
+# C:/srv/sites/projects. project.nyaahibi.web.id is the canonical URL in
+# code (PROJECTS_BASE, og:url, registry links).
+project.nyaahibi.web.id:8080 {
 	bind 127.0.0.1
 	root * C:/srv/sites/projects
 	encode gzip
 	try_files {path} /index.html
+	file_server
+
+	@assets path /assets/*
+	header @assets Cache-Control "public, max-age=31536000, immutable"
+	header Cache-Control "no-cache"
+}
+
+# Main site (apex): the explanatory landing (main.html) serves the root;
+# hub deep links (/dash, /<slug>, /furuhibi/...) still resolve from the
+# same content root, so every shared URL works on both hostnames.
+nyaahibi.web.id:8080 {
+	bind 127.0.0.1
+	root * C:/srv/sites/projects
+	encode gzip
+
+	# Exact root → main.html; unknown paths fall back to it as well.
+	@root path /
+	rewrite @root /main.html
+	try_files {path} /main.html
 	file_server
 
 	@assets path /assets/*

@@ -331,6 +331,26 @@
       }
     ]
   },
+  "main": {
+    "metaTitle": "NyaaHibi — Proyek Audio DIY oleh Ulil Albab",
+    "intro": "Rumah untuk proyek audio buatan sendiri — amplifier, DAC, dan alat dengar sehari-hari yang dirancang dan dirakit oleh Ulil Albab.",
+    "heroCta": "Mulai dari sini",
+    "aboutEyebrow": "Tentang Situs Ini",
+    "aboutTitle": "Apa isinya?",
+    "aboutP1": "NyaaHibi adalah kumpulan proyek elektronika audio: dari amplifier headphone generasi pertama, amplifier mikro dan amplifier tabung, sampai DAC dan amplifier yang dikontrol lewat WebUSB. Setiap proyek punya halamannya sendiri dengan skema, catatan, dan websitenya sendiri.",
+    "aboutP2": "Situs ini adalah pintu depannya: mulai dari sini untuk melihat daftar proyek lengkap, membuka dashboard, atau mengenal pembuatnya.",
+    "gatewayEyebrow": "Mulai Dari Sini",
+    "gatewayTitle": "Mau ke mana?",
+    "catalogTitle": "Katalog Proyek",
+    "catalogDesc": "Semua proyek NyaaHibi — yang aktif dan yang akan datang — terdaftar di satu halaman.",
+    "dashTitle": "Dashboard",
+    "dashDesc": "Semua proyek dalam sekilas: model 3D, status, dan tautan ke masing-masing website.",
+    "creatorTitle": "Tentang Pembuat",
+    "creatorDesc": "Ulil Albab — elektronika, pemrograman, dan karya lain di luar NyaaHibi.",
+    "featuredEyebrow": "Proyek",
+    "featuredTitle": "Proyek Unggulan",
+    "gatewayCta": "Buka"
+  },
   "dash": {
     "metaTitle": "Dashboard",
     "metaDesc": "Semua proyek NyaaHibi dalam satu halaman — amplifier, DAC, dan yang akan datang.",

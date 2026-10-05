@@ -130,7 +130,12 @@ export default defineConfig({
   build: {
     outDir: 'dist-hub',
     rollupOptions: {
-      input: path.resolve(import.meta.dirname, 'hub.html'),
+      // hub.html = the projects landing (project.nyaahibi.web.id);
+      // main.html = the explanatory apex interface (nyaahibi.web.id).
+      input: {
+        hub: path.resolve(import.meta.dirname, 'hub.html'),
+        main: path.resolve(import.meta.dirname, 'main.html'),
+      },
     },
   },
 })

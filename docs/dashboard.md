@@ -79,9 +79,12 @@ never come back. Run it with the commands in
   rebuilt as a hub page (commit *"Rebuild the dashboard as a hub page at
   /dash/"*) so it shares the theme, locales, and deploy pipeline.
 - The apex domain **`nyaahibi.web.id`** originally served the portfolio;
-  the portfolio moved to **`ulilhibi.my.id`**, freeing the apex. If a
-  standalone dashboard ever needs its own domain (e.g. `nyaahibi.web.id`
-  pointing at `/dash/`), that's a Caddy + Cloudflare change only — the
-  page already builds independently. If it ever needs **private secrets
+  the portfolio moved to **`ulilhibi.my.id`**, freeing the apex — it now
+  serves the **main-site landing** (`main.html`, the explainer for what
+  NyaaHibi is about). The dashboard stays at
+  `project.nyaahibi.web.id/dash/`; if a standalone dashboard ever needs
+  its own domain (e.g. the apex pointing at `/dash/` instead), that's a
+  Caddy + Cloudflare change only — the page already builds independently.
+  If it ever needs **private secrets
   or a backend**, that's the trigger to move it to a separate private
   repo (see [`architecture.md`](architecture.md) → "Why not split").

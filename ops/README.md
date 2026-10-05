@@ -48,11 +48,11 @@ C:\srv\sites\projects        served hub:
      and Defender on; the box has zero inbound exposure).
 2. **cloudflared**
    - `winget install Cloudflare.cloudflared` (runs as a Windows service).
-   - Create a tunnel in Zero Trust → Networks → Tunnels, add two public
-     hostnames, both pointing at `http://localhost:8080`:
+   - Create a tunnel in Zero Trust → Networks → Tunnels, add three public
+     hostnames, all pointing at `http://localhost:8080`:
      - `ulilhibi.my.id` → portfolio (zone `my.id` in Cloudflare)
      - `project.nyaahibi.web.id` → hub (landing + site folders)
-     - `nyaahibi.web.id` → hub as well (apex alias of the same content)
+     - `nyaahibi.web.id` → main site (the explanatory landing at the root)
 3. **Caddy**
    - Put this `ops/Caddyfile` at `C:\srv\caddy\Caddyfile`, adjust the
      portfolio hostname if your apex differs.
@@ -84,12 +84,15 @@ C:\srv\sites\projects        served hub:
 
 ## Hub landing + detail pages (this repo)
 
-- Hostnames: `project.nyaahibi.web.id` and the apex `nyaahibi.web.id`
-  serve this same content (one Caddy block, two host headers);
-  `project.` stays canonical in `PROJECTS_BASE`, the og:url heads, and
-  the portfolio's registry links.
-- Source: `hub.html` + `src/hub/` — shares the portfolio's theme tokens,
-  locale files (`hub.*` keys), `ThemeToggle`, `LocaleToggle`, and logo.
+- Hostnames: `project.nyaahibi.web.id` serves the hub (landing + site
+  folders); the apex `nyaahibi.web.id` serves the **main landing**
+  (`main.html`) at its root from the same content root — `/dash`,
+  `/<slug>`, and `/furuhibi/*` deep links resolve on both. `project.`
+  stays canonical in `PROJECTS_BASE`, the og:url heads, and the
+  portfolio's registry links.
+- Source: `hub.html` + `main.html` + `src/hub/` — shares the portfolio's
+  theme tokens, locale files (`hub.*`, `dash.*`, `main.*` keys),
+  `ThemeToggle`, `LocaleToggle`, and logo.
 - Cards are driven by `hubSites` in `src/data/projects.ts`
   (`slug`, `status: live|soon`, optional `extra` link, optional `model`
   GLB path used by the dashboard) plus three

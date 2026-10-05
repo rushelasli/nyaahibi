@@ -331,6 +331,26 @@
       }
     ]
   },
+  "main": {
+    "metaTitle": "NyaaHibi — DIY Audio Projects by Ulil Albab",
+    "intro": "The home of hand-made audio projects — amplifiers, DACs, and everyday listening gear designed and built by Ulil Albab.",
+    "heroCta": "Start here",
+    "aboutEyebrow": "About This Site",
+    "aboutTitle": "What's here?",
+    "aboutP1": "NyaaHibi is a collection of audio electronics projects — from the first-generation headphone amplifier to micro and tube amps, DACs, and WebUSB-controlled amplifiers. Every project has its own page with schematics, notes, and its own site.",
+    "aboutP2": "This site is the front door: start here for the full project list, the dashboard, or to get to know the maker.",
+    "gatewayEyebrow": "Start Here",
+    "gatewayTitle": "Where to?",
+    "catalogTitle": "Project Catalog",
+    "catalogDesc": "Every NyaaHibi project — live and coming soon — listed on a single page.",
+    "dashTitle": "Dashboard",
+    "dashDesc": "Every project at a glance — 3D models, status, and links to each site.",
+    "creatorTitle": "About the Maker",
+    "creatorDesc": "Ulil Albab — electronics, programming, and work beyond NyaaHibi.",
+    "featuredEyebrow": "Projects",
+    "featuredTitle": "Featured Projects",
+    "gatewayCta": "Open"
+  },
   "dash": {
     "metaTitle": "Dashboard",
     "metaDesc": "Every NyaaHibi project on one page — amplifiers, DACs, and what's coming next.",
