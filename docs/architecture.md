@@ -39,14 +39,19 @@ to a view:
                  → MainLanding       (main.html: what NyaaHibi is + gateways)
 /<slug>/         → detail page       (detailPages map in src/hub/HubApp.vue)
 /dash/           → DashboardPage     (src/hub/DashboardPage.vue)
+/furuhibi/preset.html    → FuruhibiPresetsPage   (subPages map)
+/furuhibi/download.html  → FuruhibiDownloadPage  (subPages map)
 anything else    → the entry's own landing ("soon" slugs land on HubLanding)
 ```
 
 `vite.hub.config.ts` writes a per-slug `index.html` (with that project's own
-`<title>`/`og:` meta for crawlers) into `dist-hub/<slug>/` at build time, and
-`dist-hub/dash/index.html` for the dashboard. `deploy.ps1` then overlays
-those files onto the server's folders; `dist-hub/main.html` ships with the
-root mirror as-is (the apex Caddy block serves it at `/`).
+`<title>`/`og:` meta for crawlers) into `dist-hub/<slug>/` at build time,
+`dist-hub/dash/index.html` for the dashboard, and — because they are real
+file URLs rather than folders — `dist-hub/furuhibi/preset.html` and
+`dist-hub/furuhibi/download.html` for the two FuruHibi sub-pages.
+`deploy.ps1` then overlays those files onto the server's folders;
+`dist-hub/main.html` ships with the root mirror as-is (the apex Caddy
+block serves it at `/`).
 
 ## The split with the portfolio (Oct 2026)
 
@@ -57,8 +62,8 @@ The boundary:
 | | This repo (hub + main) | `rushelasli/ulilhibi` (portfolio) |
 | --- | --- | --- |
 | Entries | `hub.html`, `main.html` | `index.html` + vue-router |
-| Pages | `src/hub/*`, 5 detail pages, `project/` + `furuhibi/` sections | home page + profile sections, `ui/` components |
-| Locale keys | `nav`, `footer`, `hub.*`, `dash.*`, `main.*`, per-project namespaces (479 keys) | `meta`, `nav`, `common`, profile namespaces (112 keys) |
+| Pages | `src/hub/*`, 5 detail pages, 2 FuruHibi sub-pages, `project/` + `furuhibi/` sections | home page + profile sections, `ui/` components |
+| Locale keys | `nav`, `footer`, `hub.*`, `dash.*`, `main.*`, per-project namespaces (653 keys) | `meta`, `nav`, `common`, profile namespaces (112 keys) |
 | Registry | `hubSites` + base URLs | `projectLinks` + base URLs |
 | Build | `bun run build:hub` → `dist-hub/` | `bun run build` → `dist/` |
 | Deploy | `ops/deploy.ps1` → `C:\srv\sites\projects` | its own `ops/deploy.ps1` → `C:\srv\sites\hibi` |
@@ -106,6 +111,7 @@ portfolio keeps only `/`.
 C:\srv\sites\hibi       ← dist/          (portfolio — deployed by rushelasli/ulilhibi)
 C:\srv\sites\projects   ← dist-hub/      (hub landing at root, main.html alongside)
     ├── <slug>/         ← per-site clones, with dist-hub/<slug>/index.html overlaid
+    │                     (furuhibi/ also gets preset.html + download.html overlaid)
     └── dash/           ← legacy box-side assets, with dist-hub/dash/index.html overlaid
 ```
 

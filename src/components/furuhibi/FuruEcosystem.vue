@@ -14,7 +14,7 @@ const ecoItems = computed(() => tm('furuhibi.ecoItems') as unknown as EcoItem[])
 </script>
 
 <template>
-  <section id="software" class="border-b border-foreground/10">
+  <section id="software" class="scroll-mt-32 border-b border-foreground/10">
     <div class="mx-auto max-w-5xl px-5 py-16 md:px-8 md:py-20">
       <p class="mb-3 font-mono text-[13px] uppercase tracking-[0.2em] text-primary">
         {{ t('furuhibi.ecoEyebrow') }}

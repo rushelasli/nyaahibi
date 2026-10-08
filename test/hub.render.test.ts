@@ -283,6 +283,71 @@ try {
 }
 
 // ---------------------------------------------------------------------------
+// FuruHibi sub-pages — /furuhibi/{preset,download}.html are emitted beside
+// the landing and route through the same app by pathname. One content
+// marker per page: copy only that page renders.
+const subPageTests: Record<string, { path: string; marker: string }> = {
+  'furuhibi-preset': {
+    path: '/furuhibi/preset.html',
+    marker: 'furuhibi.presets.device.connect', // "🔗 Connect Device"
+  },
+  'furuhibi-download': {
+    path: '/furuhibi/download.html',
+    marker: 'furuhibi.downloads.heading', // "Companion app untuk Windows dan Android."
+  },
+}
+
+for (const [key, spec] of Object.entries(subPageTests)) {
+  for (const locale of ['id', 'en'] as const) {
+    const tag = `${key}:${locale}`
+    try {
+      i18n.global.locale.value = locale
+      const app = createSSRApp(HubApp, { initialPath: spec.path })
+      app.use(i18n)
+
+      const html = await renderToString(app)
+      detailOutputs[tag] = html
+
+      if (html.length < 500) failures.push(`${tag}: suspiciously short render (${html.length} chars)`)
+
+      const leak = html.match(KEY_LEAK)
+      if (leak) failures.push(`${tag}: unresolved i18n key leaked -> ${leak[0]}`)
+      const attrLeak = html.match(ATTR_KEY_LEAK)
+      if (attrLeak) failures.push(`${tag}: unresolved key in attribute -> ${attrLeak[0]}`)
+
+      // Shared chrome survives the page swap
+      if (!html.includes('/logo.png')) failures.push(`${tag}: navbar logo missing`)
+      if (!rendered(html, i18n.global.t('nav.theme'))) failures.push(`${tag}: theme toggle missing`)
+      if (!rendered(html, i18n.global.t('nav.languageToggle'))) {
+        failures.push(`${tag}: language toggle missing`)
+      }
+
+      // Page content + links back into the FuruHibi app
+      if (!rendered(html, i18n.global.t(spec.marker))) failures.push(`${tag}: content marker missing`)
+      if (!html.includes('href="/furuhibi/dsp.html"')) failures.push(`${tag}: DSP app link missing`)
+      const backToLanding = html.includes('href="/furuhibi"') || html.includes('href="/furuhibi#')
+      if (!backToLanding) failures.push(`${tag}: landing back link missing`)
+
+      // The landing itself must NOT render on a sub-page
+      if (html.includes('id="hero"') || html.includes('id="live"')) {
+        failures.push(`${tag}: landing sections rendered on sub-page`)
+      }
+
+      // The download page's nav anchors must be rebased to the landing
+      if (key === 'furuhibi-download' && !html.includes('href="/furuhibi#products"')) {
+        failures.push(`${tag}: nav anchors not rebased to the landing`)
+      }
+
+      if (html.includes('furuhibi.nyaahibi.web.id')) {
+        failures.push(`${tag}: retired furuhibi subdomain still linked`)
+      }
+    } catch (e) {
+      failures.push(`${tag}: THREW ${(e as Error).stack ?? e}`)
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Dashboard — /dash/ renders the rebuilt dashboard (cards, profile, clock)
 // on the shared hub chrome
 for (const locale of ['id', 'en'] as const) {
@@ -411,7 +476,12 @@ for (const locale of ['id', 'en'] as const) {
 }
 
 // Per page, the two locales must produce genuinely different HTML
-for (const slug of [...Object.keys(detailPages), 'dash', 'main']) {
+for (const slug of [
+  ...Object.keys(detailPages),
+  ...Object.keys(subPageTests),
+  'dash',
+  'main',
+]) {
   const idHtml = detailOutputs[`${slug}:id`]
   const enHtml = detailOutputs[`${slug}:en`]
   if (idHtml && enHtml && idHtml === enHtml) {

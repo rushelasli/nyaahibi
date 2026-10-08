@@ -12,6 +12,8 @@ import AmpGen1Project from '@/pages/AmpGen1Project.vue'
 import MicroampProject from '@/pages/MicroampProject.vue'
 import TubeSeProject from '@/pages/TubeSeProject.vue'
 import FuruhibiProject from '@/pages/FuruhibiProject.vue'
+import FuruhibiPresetsPage from '@/pages/FuruhibiPresetsPage.vue'
+import FuruhibiDownloadPage from '@/pages/FuruhibiDownloadPage.vue'
 
 const props = defineProps<{
   /** window.location.pathname — the hub has no router, so the entry
@@ -43,8 +45,36 @@ const detailPages: Record<string, DetailPage> = {
   tubeseamp: { comp: TubeSeProject },
   furuhibi: {
     comp: FuruhibiProject,
-    props: { dspHref: '/furuhibi/dsp.html', presetsHref: '/furuhibi/preset.html' },
+    props: {
+      dspHref: '/furuhibi/dsp.html',
+      presetsHref: '/furuhibi/preset.html',
+      downloadHref: '/furuhibi/download.html',
+    },
   },
+}
+
+/** FuruHibi sub-pages — emitted as real files beside the landing
+ *  (dist-hub/furuhibi/{preset,download}.html) and routed by pathname
+ *  exactly like the folder detail pages. */
+const subPages: Record<string, DetailPage> = {
+  '/furuhibi/preset.html': {
+    comp: FuruhibiPresetsPage,
+    props: { dspHref: '/furuhibi/dsp.html', landingHref: '/furuhibi' },
+  },
+  '/furuhibi/download.html': {
+    comp: FuruhibiDownloadPage,
+    props: {
+      dspHref: '/furuhibi/dsp.html',
+      presetsHref: '/furuhibi/preset.html',
+      downloadHref: '/furuhibi/download.html',
+    },
+  },
+}
+
+/** Locale key driving each sub-page's <title> (see vite.hub.config's heads). */
+const subPageTitle: Record<string, string> = {
+  '/furuhibi/preset.html': 'furuhibi.presets.metaTitle',
+  '/furuhibi/download.html': 'furuhibi.downloads.metaTitle',
 }
 
 const detailPath = computed(() => {
@@ -63,19 +93,24 @@ const detailEntry = computed<DetailPage | null>(() => {
   return detailPages[site.slug] ?? null
 })
 
+const subPage = computed<DetailPage | null>(() => subPages[detailPath.value] ?? null)
+
 /** The rebuilt dashboard — vite.hub.config writes dist-hub/dash/index.html. */
 const isDash = computed(() => detailPath.value === '/dash')
 
 function syncDocumentMeta() {
   document.documentElement.lang = locale.value
   const detail = detailSite.value
-  document.title = isDash.value
-    ? `${t('dash.metaTitle')} — ${t('hub.title')}`
-    : detail
-      ? `${t(`hub.sites.${detail.slug}.title`)} — ${t('hub.title')}`
-      : props.site === 'main'
-        ? t('main.metaTitle')
-        : t('hub.metaTitle')
+  const subTitle = subPageTitle[detailPath.value]
+  document.title = subTitle
+    ? `${t(subTitle)} — ${t('hub.title')}`
+    : isDash.value
+      ? `${t('dash.metaTitle')} — ${t('hub.title')}`
+      : detail
+        ? `${t(`hub.sites.${detail.slug}.title`)} — ${t('hub.title')}`
+        : props.site === 'main'
+          ? t('main.metaTitle')
+          : t('hub.metaTitle')
 }
 
 onMounted(syncDocumentMeta)
@@ -115,11 +150,18 @@ watch(locale, syncDocumentMeta)
         </nav>
       </header>
 
-      <!-- Dashboard at /dash/, detail page for the five live sites (back
-           goes to the hub landing); anything else renders the landing —
+      <!-- Dashboard at /dash/, FuruHibi sub-pages at /furuhibi/{preset,
+           download}.html, detail page for the five live sites (back goes
+           to the hub landing); anything else renders the landing —
            the explanatory main site when the entry says so, the projects
            landing otherwise -->
       <DashboardPage v-if="isDash" />
+      <component
+        v-else-if="subPage"
+        :is="subPage.comp"
+        :key="detailPath"
+        v-bind="subPage.props"
+      />
       <component
         v-else-if="detailEntry"
         :is="detailEntry.comp"

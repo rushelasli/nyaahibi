@@ -96,6 +96,21 @@ foreach ($slug in $liveSlugs) {
     }
 }
 
+# FuruHibi's companion pages (Cloud PEQ Presets + Download Center) — the
+# hub build emits them beside the landing, and they overlay like
+# index.html (the per-site mirror above restores the live site's own
+# files first; everything else in the folder stays untouched).
+$furuDst = "$sites\projects\furuhibi"
+foreach ($subpage in @('preset.html', 'download.html')) {
+    $subSrc = "$repos\hibi\dist-hub\furuhibi\$subpage"
+    if ((Test-Path $subSrc) -and (Test-Path $furuDst)) {
+        Copy-Item $subSrc "$furuDst\$subpage" -Force
+        Write-Host "      furuhibi <- $subpage"
+    } else {
+        Write-Warning "      furuhibi $subpage skipped — source or target folder missing"
+    }
+}
+
 # The dashboard page gets the same treatment: dist-hub/dash/index.html on
 # top of the box's dash/ folder. Only index.html is replaced — the GLB
 # models, profile photo, and comingsoon.html stay box-side (protected by

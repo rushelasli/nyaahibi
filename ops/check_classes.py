@@ -51,6 +51,19 @@ ALLOW = {
     'en-GB', 'en-US', 'id-ID',
     # Main-landing section ids (HTML ids, not classes)
     'main-hero', 'main-about', 'main-gateways', 'main-featured',
+    # FuruHibi section ids (HTML ids, not classes)
+    'block-diagram', 'pcb-viewer',
+    # Vue directive / template expressions that survive the quote-scan
+    'v-else',
+    'effects[active].desc', 'effects[active].label',
+    'groups[0].steps', 'groups[0].title', 'groups[1].steps', 'groups[1].title',
+    'groups[2].steps', 'groups[2].title', 'speedValues[i]',
+    # FuruHibi copy — hyphen/slash words in id/en locale text
+    'alih-alih', 'ambience/room', 'ambience/ruang', 'cut-off', 'di-boost',
+    'diubah/disusun', 'dual-core', 'fixed-size', 'frame-aligned',
+    'in-page', 'instrumen/vokal', 'instrument/vocal', 'jitter-free', 'low-level',
+    'low-pass', 'low-power', 'overload/distorsi', 'overload/distortion',
+    'power-supply', 'ready-to-process', 'terus-menerus',
 }
 
 def in_css(tok: str) -> bool:

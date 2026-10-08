@@ -706,33 +706,43 @@
     "heroSub": "FuruHibi designs R2R DACs and their supporting software — from firmware, DSP, to cloud presets — as one ecosystem that stays honest to the analog character of sound.",
     "ctaPrimary": "Explore FuruHibi",
     "ctaSecondary": "Explore DSP",
-    "mascotAlt": "FuruHibi mascot — photo by Flassy",
+    "mascotAlt": "FuruHibi mascot by NyaaHibi",
     "mascotCaption": "FuruHibi mascot — Photos by Flassy",
+    "nav": {
+      "products": "Products",
+      "software": "Software",
+      "dsp": "DSP",
+      "downloads": "Downloads",
+      "about": "About",
+      "openDsp": "Open DSP",
+      "cloudPresets": "Cloud Presets"
+    },
     "productsEyebrow": "Hardware",
     "productsTitle": "FuruHibi R2R DAC",
-    "productLabel": "FuruHibi R2R — ESP32-S3",
-    "productTitle": "A resistor-ladder DAC, fully digitally controlled.",
-    "productDesc": "Built on the ESP32-S3, FuruHibi R2R combines an R2R DAC path with Bluetooth reception, USB Audio Class, and an OLED display — controlled through a Windows and Android companion app.",
+    "productsP1": "<strong>FuruHibi</strong> comes from Japanese: <strong>furu</strong> (古), meaning \"old, ancient, vintage\", and <strong>hibi</strong> (日々), meaning \"days\". Philosophically, the name conveys \"days that have passed\" — memories of yesteryear.",
+    "productsP2": "For us, audio is not just specifications and measurement figures. Audio is about how music brings out emotion, awakens memories, and accompanies everyday life.",
+    "productLabel": "FuruHibi R2R — DAC",
+    "productTitle": "Specifications",
     "specs": [
       {
-        "label": "Platform",
-        "value": "ESP32-S3"
+        "label": "Power",
+        "value": "±100mW@32ohm"
       },
       {
-        "label": "Input",
-        "value": "Bluetooth · USB UAC"
+        "label": "Battery",
+        "value": "dual 3500mAH"
       },
       {
-        "label": "Control",
-        "value": "OLED GUI + Companion App"
+        "label": "UAC",
+        "value": "1.0 16/48Khz"
       },
       {
-        "label": "DSP",
-        "value": "PEQ · Loudness · Surround"
+        "label": "BT",
+        "value": "LDAC, AptX HD, Aptx, SBC"
       }
     ],
-    "productCta": "Get the Companion App",
-    "productAlt": "Architecture diagram of the FuruHibi R2R audio pipeline",
+    "viewerAlt": "FuruHibi R2R DAC PCB 3D model",
+    "fullscreen": "Fullscreen View",
     "ecoEyebrow": "Software Ecosystem",
     "ecoTitle": "One ecosystem, from hardware to presets.",
     "ecoIntro": "Every FuruHibi device is powered by interconnected software — a companion app for device control, DSP to shape the sound, and cloud presets to save the results.",
@@ -761,42 +771,6 @@
     "presetsTitle": "Discover, save and manage your sound presets.",
     "presetsDesc": "Save your favorite DSP configurations to the cloud, explore presets from other users, and apply them to your FuruHibi device anytime.",
     "presetsCta": "Explore Cloud Presets",
-    "downloadsEyebrow": "Download Center",
-    "downloadsTitle": "Companion app for Windows and Android.",
-    "downloads": [
-      {
-        "platform": "Windows",
-        "tag": "Desktop App",
-        "latestLabel": "Latest version",
-        "version": "v1.1",
-        "downloadLabel": "Download",
-        "historyLabel": "Release History",
-        "href": "https://project.nyaahibi.web.id/furuhibi/windows_app/FuruHibiR2R%20DAC%20%20v1.1.rar",
-        "history": [
-          {
-            "version": "v1.0",
-            "label": "Download .rar",
-            "href": "https://project.nyaahibi.web.id/furuhibi/windows_app/FuruHibiR2R%20DAC%20%20v1.0.rar"
-          }
-        ]
-      },
-      {
-        "platform": "Android",
-        "tag": "Mobile App",
-        "latestLabel": "Latest version",
-        "version": "v1.1",
-        "downloadLabel": "Download APK",
-        "historyLabel": "Release History",
-        "href": "https://project.nyaahibi.web.id/furuhibi/android_app/furuhibi%20r2r%201.1.apk",
-        "history": [
-          {
-            "version": "v1.0",
-            "label": "Download .apk",
-            "href": "https://project.nyaahibi.web.id/furuhibi/android_app/furuhibi%20r2r%201.0.apk"
-          }
-        ]
-      }
-    ],
     "philEyebrow": "Technology & Philosophy",
     "philTitle": "Analog heritage. Modern engineering.",
     "philIntro": "FuruHibi does not chase technology just for specification numbers. We combine musicality, warmth, and simplicity with digital signal processing and modern connectivity.",
@@ -825,25 +799,365 @@
     "philLine": "Modern Design, Analog Heritage.",
     "archEyebrow": "Architecture",
     "archTitle": "FuruHibi R2R Audio Architecture",
-    "archDesc": "Architecture diagram of the FuruHibi R2R audio pipeline — from USB/Bluetooth input through DSP and PCM output to the R2R DAC, powered by the ESP32-S3.",
+    "archDesc": "The FuruHibi R2R audio pipeline architecture — from USB/Bluetooth input through DSP to the PCM output feeding the R2R DAC.",
     "archAlt": "FuruHibi R2R System Block Diagram",
-    "updatesEyebrow": "Latest Updates",
-    "updatesTitle": "Firmware, driver & app updates.",
-    "updates": [
+    "archGroups": [
       {
-        "tag": "App",
-        "desc": "Windows and Android companion app updated to version 1.1.",
-        "version": "v1.1"
+        "title": "Core 0 — USB Audio Input",
+        "steps": [
+          {
+            "name": "USB Audio Class 1 (UAC1 / USB 2.0)",
+            "desc": "The host (PC/phone audio player) sends digital audio to the device over the standard UAC1 protocol via USB 2.0."
+          },
+          {
+            "name": "TinyUSB Device Stack",
+            "desc": "The TinyUSB library runs the device side of USB communication, translating physical USB signals into data the firmware can process."
+          },
+          {
+            "name": "USB Receive Task",
+            "desc": "A dedicated RTOS task that receives audio data from the USB stack in real time, running continuously on Core 0."
+          },
+          {
+            "name": "USB Isochronous OUT Endpoint",
+            "desc": "The isochronous endpoint keeps audio flowing at fixed time intervals — essential for stable, jitter-free audio."
+          },
+          {
+            "name": "TinyUSB Stack (USB Interrupt → Packet Realignment)",
+            "desc": "The low-level chain: USB Interrupt catches USB events, the USB Audio Callback triggers data pickup, the USB Receive Task grabs packets, Packet Validation verifies them, and Packet Realignment reorders packets that may arrive out of sequence."
+          },
+          {
+            "name": "Variable USB Packet Buffer",
+            "desc": "A temporary buffer for USB packets whose size varies each cycle, before they move on to the staging stage."
+          },
+          {
+            "name": "USB Audio Receiver — Staging & Frame Alignment",
+            "desc": "The Staging Buffer holds raw data, then Frame Alignment arranges it into neat, synchronized audio frames."
+          },
+          {
+            "name": "Fixed Audio Block Generator (64 frame)",
+            "desc": "Groups audio data into fixed-size blocks (64 frames) so the next stage always processes a consistent unit."
+          },
+          {
+            "name": "Quad Audio Buffer",
+            "desc": "A 4-slot circular buffer with <em>Free → Writing → Ready → Processing</em> states, letting USB reception and audio processing run in parallel without waiting for each other."
+          }
+        ]
       },
       {
-        "tag": "App",
-        "desc": "Initial release of the FuruHibi R2R companion app for Windows and Android.",
-        "version": "v1.0"
+        "title": "Core 1 — Buffer Handling & PCM Output",
+        "steps": [
+          {
+            "name": "Acquire READY Buffer",
+            "desc": "Core 1 picks up a buffer already marked \"Ready\" from the Quad Audio Buffer to start processing."
+          },
+          {
+            "name": "Working Buffer",
+            "desc": "A working copy of the fetched audio data, where processing happens without disturbing the original buffer."
+          },
+          {
+            "name": "PCM Frame Processing",
+            "desc": "Data is converted into ready-to-process PCM (Pulse Code Modulation) frames — the standard digital audio format."
+          },
+          {
+            "name": "DSP Processing",
+            "desc": "PCM frames are sent to the DSP chain (see the panel on the right) for signal processing; the result also feeds the FFT Visualizer."
+          },
+          {
+            "name": "FFT Visualizer",
+            "desc": "Computes the Fast Fourier Transform of the audio signal for spectrum visualization (e.g. an equalizer display)."
+          },
+          {
+            "name": "PCM Buffer → I2S DMA → I2S to PCM56",
+            "desc": "The processed result lands in the PCM Buffer, moves via I2S DMA (transfer without burdening the CPU), then converts to the I2S signal the PCM56 DAC understands."
+          },
+          {
+            "name": "PCM56 L CH / R CH (Monolithic R2R DAC)",
+            "desc": "Two separate monolithic R2R DAC chips for the left and right channels convert PCM digital data into analog — the heart of FuruHibi's \"R2R\" sound."
+          }
+        ]
+      },
+      {
+        "title": "DSP Processing Chain",
+        "steps": [
+          {
+            "name": "PCM IN",
+            "desc": "Entry point of the raw PCM signal into the DSP processing chain."
+          },
+          {
+            "name": "Auto PRE Gain Control",
+            "desc": "Automatically adjusts the gain level before further processing, preventing clipping at the start of the chain."
+          },
+          {
+            "name": "Parametric EQ",
+            "desc": "Parametric equalizer shaping the frequency character (bass/mid/treble) to FuruHibi's tuning."
+          },
+          {
+            "name": "Soft Clipper",
+            "desc": "Gently limits signal peaks so no hard distortion occurs at high levels."
+          },
+          {
+            "name": "Loudness",
+            "desc": "Loudness compensation that keeps the frequency balance pleasant at both low and high volumes."
+          },
+          {
+            "name": "DC Blocker",
+            "desc": "Filters unwanted DC offset from the audio signal, keeping it clean."
+          },
+          {
+            "name": "Stereo Widening",
+            "desc": "Widens the perceived stereo soundstage for a more spatial image."
+          },
+          {
+            "name": "Spatial Clarity",
+            "desc": "Improves clarity and separation of instrument/vocal positions in the mix."
+          },
+          {
+            "name": "Surround",
+            "desc": "Extra processing that gives the stereo output a surround feel."
+          },
+          {
+            "name": "Reverb",
+            "desc": "Adds ambience/room to the sound so it does not feel too \"dry\"."
+          },
+          {
+            "name": "Master Volume",
+            "desc": "Final volume control before the signal leaves the DSP chain."
+          },
+          {
+            "name": "Final Soft Clipper",
+            "desc": "Last safety net against overload/distortion before the signal reaches the PCM output stage."
+          }
+        ]
       }
     ],
-    "aboutEyebrow": "About",
-    "aboutTitle": "About FuruHibi",
-    "aboutP1": "<strong>FuruHibi</strong> comes from Japanese: <strong>furu</strong> (古), meaning \"old, ancient, vintage\", and <strong>hibi</strong> (日々), meaning \"days\". Philosophically, the name conveys \"days that have passed\" — memories of yesteryear.",
-    "aboutP2": "For us, audio is not just specifications and measurement figures. Audio is about how music brings out emotion, awakens memories, and accompanies everyday life."
+    "sbfg": {
+      "title": "How the Staging Buffer → Fixed Audio Block Generator works",
+      "sub": "Random-size USB packets pile up in the staging buffer, drain into fixed frame-aligned blocks, travel to the ring buffer, and the consumer always emits fixed-size blocks (or silence when empty).",
+      "play": "▶ Play",
+      "pause": "⏸ Pause",
+      "step": "Step",
+      "reset": "Reset",
+      "speedLabel": "Speed:",
+      "speeds": [
+        "Slow",
+        "Normal",
+        "Fast"
+      ],
+      "readyStatus": "Ready. Press Play or Step.",
+      "legend": [
+        "USB packet (random size)",
+        "Staging Buffer",
+        "Ring Buffer (NOSPLIT)",
+        "Fixed block to callback",
+        "Silence (underrun)"
+      ],
+      "stats": [
+        "Blocks sent",
+        "Items in ring buffer",
+        "Underrun (silence)",
+        "Left in staging"
+      ]
+    },
+    "qbuf": {
+      "title": "How the Quad Audio Buffer works",
+      "inLabel": "DATA IN",
+      "inShort": "IN",
+      "outLabel": "DATA OUT",
+      "outShort": "OUT",
+      "labels": [
+        "empty",
+        "filling",
+        "ready",
+        "processing"
+      ],
+      "caption": "Four buffers rotate through states: <strong>empty → filling → ready → processing</strong>. The \"in\" arrow moves once a full buffer is filled, the \"out\" arrow moves once a buffer is consumed — so USB reception and DSP processing run in parallel without waiting for each other."
+    },
+    "dspFx": {
+      "title": "How each DSP effect works",
+      "sub": "Pick a module to see a simple animation of how the audio signal changes while passing through that effect.",
+      "legend": [
+        "Input signal",
+        "Signal after processing"
+      ],
+      "effects": {
+        "eq": {
+          "label": "Parametric EQ",
+          "desc": "<strong>Parametric EQ</strong> raises or lowers the level in specific frequency bands (Low / Mid / High). The blue curve shows the frequency response — boosted bands 'pop' out of the flat 0 dB line."
+        },
+        "loudness": {
+          "label": "Loudness",
+          "desc": "<strong>Loudness</strong> adds bass &amp; treble when the volume is low, following the human ear (Fletcher–Munson) so the frequency balance still feels full at low levels."
+        },
+        "widening": {
+          "label": "Stereo Widening",
+          "desc": "<strong>Stereo Widening</strong> increases the difference between the left &amp; right channels so the soundstage feels wider — L and R, once nearly identical, are pushed further apart."
+        },
+        "surround": {
+          "label": "Surround",
+          "desc": "<strong>Surround</strong> adds a diffusion effect to the stereo output so it feels like you're surrounded by the room, not just hearing two speakers."
+        },
+        "clipper": {
+          "label": "Soft Clipper",
+          "desc": "<strong>Soft Clipper</strong> rounds off overly high signal peaks gently instead of chopping them off (hard clip), which would cause sharp distortion."
+        },
+        "clarity": {
+          "label": "Spatial Clarity",
+          "desc": "<strong>Spatial Clarity</strong> sharpens the separation of instrument &amp; vocal positions in the mix, from crowded to 'separated' and detailed."
+        },
+        "reverb": {
+          "label": "Reverb",
+          "desc": "<strong>Reverb</strong> adds room reflections (ambience) after the original sound — a chain of decaying echoes so it doesn't sound too 'dry'."
+        }
+      }
+    },
+    "blockEyebrow": "Architecture",
+    "blockTitle": "FuruHibiR2R Block & Routing Diagram",
+    "blockDesc": "Block & Routing Diagram FuruHibiR2R",
+    "blockAlt": "FuruHibiR2R Block & Routing Diagram",
+    "blockGroupTitle": "Block Functions",
+    "blockSteps": [
+      {
+        "name": "Battery Charger",
+        "desc": "Battery charger module with a 1A current limit and auto cut-off when full."
+      },
+      {
+        "name": "Battery",
+        "desc": "1S battery — dual 3500mAh cells."
+      },
+      {
+        "name": "Rotary Encoder",
+        "desc": "Rotary encoder with push to control the OLED."
+      },
+      {
+        "name": "LDO",
+        "desc": "Low-dropout regulator — a low-power LDO so sleep mode doesn't drain the battery."
+      },
+      {
+        "name": "MCU Main",
+        "desc": "ESP32-S3 dual-core 240MHz — runs the main system and handles DSP and UAC in the FuruHibiR2R DAC."
+      },
+      {
+        "name": "MCU BT Receiver",
+        "desc": "ESP32D0WD (ESP32-Wroom) dual-core 240MHz — an extra Bluetooth module for receiving audio over Bluetooth."
+      },
+      {
+        "name": "Main Symmetric Step UP",
+        "desc": "Steps the 4.2V battery voltage up to a symmetric rail above 7V."
+      },
+      {
+        "name": "RC Filter dan Filter Stage 2",
+        "desc": "Passive RC filter and a second stage to smooth power-supply ripple."
+      },
+      {
+        "name": "Discrete LDO",
+        "desc": "A discrete LDO with a fixed symmetric 7V output."
+      },
+      {
+        "name": "Dual R2R DAC",
+        "desc": "Dual 16-bit monolithic R2R DACs producing analog audio via the resistor-ladder method."
+      },
+      {
+        "name": "I/V Stage",
+        "desc": "Converts the DAC's current output into a voltage."
+      },
+      {
+        "name": "LPF",
+        "desc": "Passive low-pass filter, 4th-order Butterworth."
+      },
+      {
+        "name": "PRE AMP",
+        "desc": "Gain stage with hotswap support."
+      },
+      {
+        "name": "Buffer",
+        "desc": "Output buffer that boosts current from the preamp."
+      }
+    ],
+    "aboutEyebrow": "About FuruHibi",
+    "aboutTitle": "Designed and developed by a clueless DIY audio tinkerer.",
+    "aboutP1": "For us, audio is not just specifications and measurement figures. Audio is about how music brings out emotion, awakens memories, and accompanies everyday life.",
+    "aboutP2": "Thanks for visiting. If you have questions or found a DSP bug, reach out through the links below.",
+    "aboutPhotoAlt": "Illustration of the FuruHibi creator",
+    "aboutSocialAbout": "About Me",
+    "aboutSocialChat": "Chat Me (FB)",
+    "presets": {
+      "metaTitle": "Cloud PEQ Presets",
+      "title": "☁ Cloud PEQ Presets",
+      "sub": "PEQ & DSP presets shared by FuruHibi R2R users",
+      "back": "← Home",
+      "dspAdjust": "⚙ DSP Adjust",
+      "device": {
+        "idle": "Device not connected",
+        "connected": "Connected: {name}",
+        "connect": "🔗 Connect Device",
+        "disconnect": "Disconnect",
+        "noBluetooth": "This browser doesn't support Web Bluetooth. Use Chrome/Edge on desktop or Android.",
+        "connectFail": "Bluetooth connection failed or device not found."
+      },
+      "search": {
+        "placeholder": "Search preset or user name...",
+        "clear": "Clear search"
+      },
+      "peq": {
+        "title": "🎚 Preset PEQ",
+        "loading": "Loading PEQ preset list...",
+        "empty": "No PEQ presets saved yet. Be the first through the DSP Adjust page!",
+        "loadFail": "Failed to load PEQ presets: ",
+        "noMatch": "No PEQ presets match your search."
+      },
+      "dsp": {
+        "title": "🎛 Preset DSP",
+        "desc": "Pre-Gain, Master Volume, Loudness, Stereo Width, Surround, Reverb, Spatial Clarity",
+        "loading": "Loading DSP preset list...",
+        "empty": "No DSP presets saved yet. Be the first through the DSP Adjust page!",
+        "loadFail": "Failed to load DSP presets: ",
+        "noMatch": "No DSP presets match your search."
+      },
+      "cards": {
+        "openDsp": "Open in DSP Adjust →",
+        "apply": "⚡ Apply to Device",
+        "byAuthor": "by {name}",
+        "noBand": "No band data",
+        "on": "Active",
+        "off": "Bypass"
+      },
+      "apply": {
+        "sending": "Sending to device...",
+        "ok": "✓ Applied to device successfully",
+        "fail": "Failed to send: "
+      }
+    },
+    "downloads": {
+      "metaTitle": "Download Center",
+      "eyebrow": "Download Center",
+      "heading": "Companion app for Windows and Android.",
+      "intro": "Download the latest FuruHibi companion app and firmware. The main firmware (Main FW) and Bluetooth firmware (BT Sink) are separate, so pick whichever you want to update. Each card shows the latest file along with its previous release history.",
+      "loading": "Loading...",
+      "latestLabel": "Latest file",
+      "download": "Download ({size})",
+      "empty": "No files yet",
+      "loadFail": "Failed to load: ",
+      "history": "Release History",
+      "cards": [
+        {
+          "name": "Windows",
+          "tag": "Desktop App"
+        },
+        {
+          "name": "Android",
+          "tag": "Mobile App"
+        },
+        {
+          "name": "Firmware Main",
+          "tag": "Main FW",
+          "desc": "Main FuruHibi R2R DAC firmware (ESP32S3)."
+        },
+        {
+          "name": "Firmware BT Sink",
+          "tag": "Bluetooth",
+          "desc": "Bluetooth receiver module firmware (BT Sink)."
+        }
+      ]
+    }
   }
 }

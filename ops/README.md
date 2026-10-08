@@ -73,7 +73,9 @@ C:\srv\sites\projects        served hub:
      folders are `/XD`-excluded so legacy content like `dsp.html`
      survives) → per-site folders → **hub detail-page overlay** (copies
      `dist-hub\<slug>\index.html` onto each live site folder, after the
-     mirrors restored the old sites; slugs are derived from `hubSites`).
+     mirrors restored the old sites; slugs are derived from `hubSites`;
+     `furuhibi` additionally gets `preset.html` + `download.html`, the
+     two emitted sub-pages).
    - The portfolio's run (its own script) builds `dist/`, runs its SSR
      gate, and mirrors to `C:\srv\sites\hibi`.
    - Local-only gate: `python3 ops/check_classes.py` (after
@@ -115,6 +117,15 @@ C:\srv\sites\projects        served hub:
   slug so local previews behave like the deployed folders, and
   `deploy.ps1` overlays the same file onto each live site folder after
   the per-site mirrors.
+- **FuruHibi sub-pages** (`/furuhibi/preset.html` Cloud PEQ Presets,
+  `/furuhibi/download.html` Download Center) route the same way —
+  `HubApp`'s `subPages` map picks the composer from the pathname. They
+  are **real files**, not folders: `vite.hub.config.ts` emits them beside
+  the landing with their own `<title>`/description heads, and
+  `deploy.ps1` overlays them onto the box's `furuhibi/` folder (which
+  keeps `dsp.html` and the assets box-side). The Vue ports talk to the
+  same `app.nyaahibi.web.id` APIs as the live pages
+  (`/api/presets`, `/api/dsp-presets`, `/api/downloads/<category>`).
 - **Dashboard (`/dash/`)** — the old standalone `dash/` HTML rebuilt in
   this repo (`src/hub/DashboardPage.vue`, `dash.*` locale keys): same
   header, 8 project cards (GLB viewers from `hubSites.model`, "Open

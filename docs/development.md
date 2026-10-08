@@ -27,6 +27,8 @@ bun run dev:hub    # hub + main + /dash + /<slug> → http://localhost:5174/
 | `http://localhost:5174/main.html` | Main-site landing (the apex `nyaahibi.web.id` interface) |
 | `http://localhost:5174/dash` | Dashboard |
 | `http://localhost:5174/nyaahibiv2` | That slug's detail page (all five work) |
+| `http://localhost:5174/furuhibi/preset.html` | FuruHibi Cloud PEQ Presets sub-page |
+| `http://localhost:5174/furuhibi/download.html` | FuruHibi Download Center sub-page |
 
 (The portfolio's dev server — port 5173 — lives in
 [rushelasli/ulilhibi](https://github.com/rushelasli/ulilhibi).)
@@ -36,7 +38,10 @@ bun run dev:hub    # hub + main + /dash + /<slug> → http://localhost:5174/
 (there is no `index.html` in this repo anymore — the portfolio took it
 with the split), and `HubApp` picks the page from the real
 `window.location.pathname` — the same routing the deployed site uses,
-but with HMR. Real files such as `/main.html` pass straight through.
+but with HMR. Real files such as `/main.html` pass straight through, and
+the two FuruHibi sub-paths (`/furuhibi/preset.html`,
+`/furuhibi/download.html`) are special-cased to the shell — in production
+they are real emitted files, in dev they don't exist on disk.
 
 Box-only files don't exist in the repo, and dev mirrors production's
 `try_files` fallback for them: `/furuhibi/dsp.html`,
@@ -44,13 +49,15 @@ Box-only files don't exist in the repo, and dev mirrors production's
 HTML shell locally (model cards show gray panels). They work once
 deployed, where those files live on the server box.
 
-For a production-shaped check — the generated per-slug and `/dash/`
-folders with their injected `<title>`s — build and preview instead:
+For a production-shaped check — the generated per-slug, `/dash/`, and
+FuruHibi sub-page folders with their injected `<title>`s — build and
+preview instead:
 
 ```bash
 bun run build:hub
 bun run preview:hub
 # → http://localhost:4173/  ·  /dash/  ·  /furuhibi/  ·  /nyaahibiv2/
+#   /furuhibi/preset.html  ·  /furuhibi/download.html
 ```
 
 (`deploy.ps1` and the gate commands copy `hub.html` → `index.html` in
@@ -114,11 +121,27 @@ used in `.vue` files and locale JSON actually exists in the built CSS
 python3 ops/check_classes.py
 ```
 
+## Component structure (split rule)
+
+- **Page SFCs are thin shells — ≤ ~40 lines.** `src/pages/*.vue` hold
+  props, imports, and a template that composes sections; no logic, no
+  copy. (See `FuruhibiProject.vue`, `FuruhibiPresetsPage.vue`.)
+- **Section components stay ≤ ~90 lines.** Anything bigger gets split:
+  a sub-component for a distinct UI block, or a composable `.ts` module
+  for the state/logic (`usePresetLists.ts`, `usePresetCard.ts`,
+  `useDownloadFiles.ts` are the model).
+- **Interactive logic lives in `.ts` modules**, not in SFC `<script>`
+  blocks: widget engines and math (`furuhibi/widgets/*.ts`,
+  `presets/eqCurve.ts`), API clients (`presetsApi.ts`,
+  `downloadsApi.ts`), device links (`presets/bleDevice.ts`). This keeps
+  the SFCs declarative and the engines unit-testable and SSR-safe
+  (client-only side effects run in `onMounted`).
+
 ## i18n
 
 - Two locales: `id` (Indonesian, **fallback**) and `en` —
   `src/locales/id.json`, `src/locales/en.json`. Keep them at key parity;
-  the tests fail on leaked/unresolved keys. (479 keys since the
+  the tests fail on leaked/unresolved keys. (653 keys since the
   portfolio split — the portfolio repo keeps its own 112.)
 - Initial locale: `localStorage.locale` → browser language → `id`
   (`src/i18n.ts`).

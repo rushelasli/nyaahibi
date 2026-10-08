@@ -21,7 +21,7 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <section id="dsp" class="border-b border-foreground/10">
+  <section id="dsp" class="scroll-mt-32 border-b border-foreground/10">
     <div class="mx-auto max-w-5xl md:px-8">
       <div class="grid md:grid-cols-2">
         <div class="border-b border-foreground/10 px-5 py-16 md:border-b-0 md:border-r md:py-20 md:pr-10">

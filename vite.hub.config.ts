@@ -77,6 +77,26 @@ function hubSlugPages(): Plugin {
           url: `${PROJECTS_BASE}/dash`,
         }),
       )
+      // FuruHibi sub-pages — real files beside the landing so the box
+      // serves them directly (deploy.ps1 overlays them onto the slug
+      // folder); HubApp routes them by pathname like the detail pages.
+      const subHeads: Record<string, PageHead> = {
+        'furuhibi/preset.html': {
+          title: `Cloud PEQ Presets — ${en.hub.title}`,
+          desc: en.furuhibi.presets.sub,
+          url: `${PROJECTS_BASE}/furuhibi/preset.html`,
+        },
+        'furuhibi/download.html': {
+          title: `Download Center — ${en.hub.title}`,
+          desc: en.furuhibi.downloads.intro,
+          url: `${PROJECTS_BASE}/furuhibi/download.html`,
+        },
+      }
+      for (const [rel, head] of Object.entries(subHeads)) {
+        const dst = path.join(outDir, rel)
+        fs.mkdirSync(path.dirname(dst), { recursive: true })
+        fs.writeFileSync(dst, withHead(html, head))
+      }
     },
   }
 }
@@ -98,11 +118,19 @@ function hubDevRouter(): Plugin {
         const url = req.url
         if (!url || (req.method !== 'GET' && req.method !== 'HEAD')) return next()
         const pathname = url.split('?', 1)[0]
+        const q = url.indexOf('?')
+        const suffix = q === -1 ? '' : url.slice(q)
+        // FuruHibi sub-pages are real files in production (written by
+        // hubSlugPages); they don't exist on disk in dev — serve the hub
+        // entry so HubApp reads the real pathname instead.
+        if (pathname === '/furuhibi/preset.html' || pathname === '/furuhibi/download.html') {
+          req.url = `/hub.html${suffix}`
+          return next()
+        }
         if (pathname === '/hub.html' || pathname.startsWith('/@') || pathname.includes('.')) {
           return next()
         }
-        const q = url.indexOf('?')
-        req.url = q === -1 ? '/hub.html' : `/hub.html${url.slice(q)}`
+        req.url = `/hub.html${suffix}`
         next()
       })
     },

@@ -1,12 +1,13 @@
 <script setup lang="ts">
+import FuruNav from '@/components/furuhibi/FuruNav.vue'
 import FuruHero from '@/components/furuhibi/FuruHero.vue'
 import FuruProducts from '@/components/furuhibi/FuruProducts.vue'
 import FuruEcosystem from '@/components/furuhibi/FuruEcosystem.vue'
 import FuruDspBand from '@/components/furuhibi/FuruDspBand.vue'
-import FuruDownloads from '@/components/furuhibi/FuruDownloads.vue'
 import FuruPhilosophy from '@/components/furuhibi/FuruPhilosophy.vue'
-import FuruArchitecture from '@/components/furuhibi/FuruArchitecture.vue'
-import FuruUpdates from '@/components/furuhibi/FuruUpdates.vue'
+import FuruSpecs from '@/components/furuhibi/FuruSpecs.vue'
+import FuruPipeline from '@/components/furuhibi/FuruPipeline.vue'
+import FuruBlockDiagram from '@/components/furuhibi/FuruBlockDiagram.vue'
 import FuruAbout from '@/components/furuhibi/FuruAbout.vue'
 
 /** Set by the projects hub (no router); when omitted, falls back to a router link. */
@@ -15,19 +16,21 @@ defineProps<{
   /** FuruHibi app URLs — hub passes relative paths, portfolio uses defaults. */
   dspHref?: string
   presetsHref?: string
+  downloadHref?: string
 }>()
 </script>
 
 <template>
-  <main>
+  <main id="top">
+    <FuruNav :dsp-href="dspHref" :presets-href="presetsHref" :download-href="downloadHref" />
     <FuruHero :back-href="backHref" :dsp-href="dspHref" />
     <FuruProducts />
     <FuruEcosystem />
     <FuruDspBand :dsp-href="dspHref" :presets-href="presetsHref" />
-    <FuruDownloads />
     <FuruPhilosophy />
-    <FuruArchitecture />
-    <FuruUpdates />
+    <FuruSpecs />
+    <FuruPipeline />
+    <FuruBlockDiagram />
     <FuruAbout />
   </main>
 </template>

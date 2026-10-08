@@ -706,33 +706,43 @@
     "heroSub": "FuruHibi merancang DAC R2R dan software pendukungnya — dari firmware, DSP, hingga cloud presets — sebagai satu ecosystem yang jujur terhadap karakter suara analog.",
     "ctaPrimary": "Explore FuruHibi",
     "ctaSecondary": "Explore DSP",
-    "mascotAlt": "Maskot FuruHibi — foto oleh Flassy",
+    "mascotAlt": "Maskot FuruHibi oleh NyaaHibi",
     "mascotCaption": "Maskot FuruHibi — Photos by Flassy",
+    "nav": {
+      "products": "Products",
+      "software": "Software",
+      "dsp": "DSP",
+      "downloads": "Downloads",
+      "about": "About",
+      "openDsp": "Open DSP",
+      "cloudPresets": "Cloud Presets"
+    },
     "productsEyebrow": "Hardware",
     "productsTitle": "FuruHibi R2R DAC",
-    "productLabel": "FuruHibi R2R — ESP32-S3",
-    "productTitle": "Resistor-ladder DAC, dikendalikan penuh secara digital.",
-    "productDesc": "Dibangun di atas ESP32-S3, FuruHibi R2R menggabungkan jalur DAC R2R dengan penerimaan Bluetooth, USB Audio Class, dan tampilan OLED — dikendalikan lewat companion app Windows dan Android.",
+    "productsP1": "<strong>FuruHibi</strong> berasal dari bahasa Jepang: <strong>furu</strong> (古) yang berarti \"lama, kuno, vintage\", dan <strong>hibi</strong> (日々) yang berarti \"hari-hari\". Secara filosofis, nama ini bermakna \"hari-hari yang telah berlalu\" — kenangan dari masa lampau.",
+    "productsP2": "Bagi kami, audio bukan sekadar spesifikasi dan angka pengukuran. Audio adalah tentang bagaimana musik menghadirkan emosi, membangkitkan kenangan, dan menemani keseharian.",
+    "productLabel": "FuruHibi R2R — DAC",
+    "productTitle": "Spesifikasi",
     "specs": [
       {
-        "label": "Platform",
-        "value": "ESP32-S3"
+        "label": "Power",
+        "value": "±100mW@32ohm"
       },
       {
-        "label": "Input",
-        "value": "Bluetooth · USB UAC"
+        "label": "Baterai",
+        "value": "dual 3500mAH"
       },
       {
-        "label": "Kontrol",
-        "value": "OLED GUI + Companion App"
+        "label": "UAC",
+        "value": "1.0 16/48Khz"
       },
       {
-        "label": "DSP",
-        "value": "PEQ · Loudness · Surround"
+        "label": "BT",
+        "value": "LDAC, AptX HD, Aptx, SBC"
       }
     ],
-    "productCta": "Get the Companion App",
-    "productAlt": "Diagram arsitektur pipeline audio FuruHibi R2R",
+    "viewerAlt": "3D model PCB FuruHibi R2R DAC",
+    "fullscreen": "Fullscreen View",
     "ecoEyebrow": "Software Ecosystem",
     "ecoTitle": "Satu ecosystem, dari hardware hingga preset.",
     "ecoIntro": "Setiap perangkat FuruHibi ditenagai oleh software yang saling terhubung — companion app untuk kontrol perangkat, DSP untuk membentuk karakter suara, dan cloud presets untuk menyimpan hasilnya.",
@@ -761,42 +771,6 @@
     "presetsTitle": "Discover, save and manage your sound presets.",
     "presetsDesc": "Simpan konfigurasi DSP favorit Anda ke cloud, jelajahi preset dari pengguna lain, dan terapkan ke perangkat FuruHibi kapan saja.",
     "presetsCta": "Explore Cloud Presets",
-    "downloadsEyebrow": "Download Center",
-    "downloadsTitle": "Companion app untuk Windows dan Android.",
-    "downloads": [
-      {
-        "platform": "Windows",
-        "tag": "Desktop App",
-        "latestLabel": "Latest version",
-        "version": "v1.1",
-        "downloadLabel": "Download",
-        "historyLabel": "Release History",
-        "href": "https://project.nyaahibi.web.id/furuhibi/windows_app/FuruHibiR2R%20DAC%20%20v1.1.rar",
-        "history": [
-          {
-            "version": "v1.0",
-            "label": "Download .rar",
-            "href": "https://project.nyaahibi.web.id/furuhibi/windows_app/FuruHibiR2R%20DAC%20%20v1.0.rar"
-          }
-        ]
-      },
-      {
-        "platform": "Android",
-        "tag": "Mobile App",
-        "latestLabel": "Latest version",
-        "version": "v1.1",
-        "downloadLabel": "Download APK",
-        "historyLabel": "Release History",
-        "href": "https://project.nyaahibi.web.id/furuhibi/android_app/furuhibi%20r2r%201.1.apk",
-        "history": [
-          {
-            "version": "v1.0",
-            "label": "Download .apk",
-            "href": "https://project.nyaahibi.web.id/furuhibi/android_app/furuhibi%20r2r%201.0.apk"
-          }
-        ]
-      }
-    ],
     "philEyebrow": "Technology & Philosophy",
     "philTitle": "Analog heritage. Modern engineering.",
     "philIntro": "FuruHibi tidak mengejar teknologi hanya demi angka spesifikasi. Kami menggabungkan musicality, warmth, dan kesederhanaan dengan digital signal processing serta konektivitas modern.",
@@ -825,25 +799,365 @@
     "philLine": "Modern Design, Analog Heritage.",
     "archEyebrow": "Architecture",
     "archTitle": "FuruHibi R2R Audio Architecture",
-    "archDesc": "Diagram arsitektur pipeline audio FuruHibi R2R, dari USB/Bluetooth input hingga DSP dan output PCM ke DAC R2R — didukung oleh ESP32-S3.",
+    "archDesc": "Diagram arsitektur pipeline audio FuruHibi R2R, dari USB/Bluetooth input hingga DSP dan output PCM ke DAC R2R.",
     "archAlt": "FuruHibi R2R System Block Diagram",
-    "updatesEyebrow": "Latest Updates",
-    "updatesTitle": "Firmware, driver & app updates.",
-    "updates": [
+    "archGroups": [
       {
-        "tag": "App",
-        "desc": "Companion app Windows dan Android diperbarui ke versi 1.1.",
-        "version": "v1.1"
+        "title": "Core 0 — USB Audio Input",
+        "steps": [
+          {
+            "name": "USB Audio Class 1 (UAC1 / USB 2.0)",
+            "desc": "Host (PC/HP audio player) mengirim audio digital ke perangkat menggunakan protokol standar UAC1 lewat USB 2.0."
+          },
+          {
+            "name": "TinyUSB Device Stack",
+            "desc": "Library TinyUSB menjalankan sisi device dari komunikasi USB, menerjemahkan sinyal USB fisik menjadi data yang bisa diproses firmware."
+          },
+          {
+            "name": "USB Receive Task",
+            "desc": "Task RTOS khusus yang menerima data audio dari stack USB secara real-time, dijalankan terus-menerus di Core 0."
+          },
+          {
+            "name": "USB Isochronous OUT Endpoint",
+            "desc": "Endpoint isochronous menjamin data audio mengalir dengan interval waktu tetap, penting untuk audio yang stabil tanpa jitter."
+          },
+          {
+            "name": "TinyUSB Stack (USB Interrupt → Packet Realignment)",
+            "desc": "Rangkaian proses low-level: USB Interrupt menangkap event USB, USB Audio Callback memicu pengambilan data, USB Receive Task mengambil paket, Packet Validation memastikan paket valid, dan Packet Realignment menyusun ulang urutan paket yang mungkin datang tidak berurutan."
+          },
+          {
+            "name": "Variable USB Packet Buffer",
+            "desc": "Buffer sementara untuk menampung paket USB yang ukurannya bisa bervariasi tiap siklus, sebelum diteruskan ke tahap staging."
+          },
+          {
+            "name": "USB Audio Receiver — Staging & Frame Alignment",
+            "desc": "Staging Buffer menampung data mentah, lalu Frame Alignment menyusun data menjadi frame audio yang rapi dan sinkron."
+          },
+          {
+            "name": "Fixed Audio Block Generator (64 frame)",
+            "desc": "Mengelompokkan data audio menjadi blok berukuran tetap (64 frame) agar konsisten diproses tahap berikutnya."
+          },
+          {
+            "name": "Quad Audio Buffer",
+            "desc": "Buffer melingkar 4-slot dengan status <em>Free → Writing → Ready → Processing</em>, memungkinkan penerimaan data USB dan pemrosesan audio berjalan paralel tanpa saling menunggu."
+          }
+        ]
       },
       {
-        "tag": "App",
-        "desc": "Rilis awal companion app FuruHibi R2R untuk Windows dan Android.",
-        "version": "v1.0"
+        "title": "Core 1 — Buffer Handling & PCM Output",
+        "steps": [
+          {
+            "name": "Acquire READY Buffer",
+            "desc": "Core 1 mengambil buffer yang sudah berstatus \"Ready\" dari Quad Audio Buffer untuk mulai diproses."
+          },
+          {
+            "name": "Working Buffer",
+            "desc": "Salinan kerja dari data audio yang diambil, tempat pemrosesan berlangsung tanpa mengganggu buffer asli."
+          },
+          {
+            "name": "PCM Frame Processing",
+            "desc": "Data diubah/disusun menjadi frame PCM (Pulse Code Modulation) siap olah, format audio digital standar."
+          },
+          {
+            "name": "DSP Processing",
+            "desc": "Frame PCM dikirim ke chain DSP (lihat panel kanan) untuk pemrosesan sinyal audio, dan hasilnya juga diteruskan ke FFT Visualizer."
+          },
+          {
+            "name": "FFT Visualizer",
+            "desc": "Menghitung Fast Fourier Transform dari sinyal audio untuk keperluan visualisasi spektrum (misalnya equalizer display)."
+          },
+          {
+            "name": "PCM Buffer → I2S DMA → I2S to PCM56",
+            "desc": "Hasil olahan ditampung di PCM Buffer, dipindahkan lewat I2S DMA (transfer tanpa membebani CPU), lalu dikonversi ke format sinyal I2S yang dipahami DAC PCM56."
+          },
+          {
+            "name": "PCM56 L CH / R CH (Monolithic R2R DAC)",
+            "desc": "Dua chip DAC R2R Monolithic terpisah untuk kanal kiri dan kanan, mengubah data digital PCM menjadi sinyal analog — inti karakter suara \"R2R\" FuruHibi."
+          }
+        ]
+      },
+      {
+        "title": "DSP Processing Chain",
+        "steps": [
+          {
+            "name": "PCM IN",
+            "desc": "Titik masuk sinyal PCM mentah ke dalam rantai pemrosesan DSP."
+          },
+          {
+            "name": "Auto PRE Gain Control",
+            "desc": "Menyesuaikan level gain secara otomatis sebelum diproses lebih lanjut, mencegah clipping di awal chain."
+          },
+          {
+            "name": "Parametric EQ",
+            "desc": "Equalizer parametrik untuk membentuk karakter frekuensi (bass/mid/treble) sesuai tuning FuruHibi."
+          },
+          {
+            "name": "Soft Clipper",
+            "desc": "Membatasi puncak sinyal secara halus agar tidak terjadi distorsi keras (hard clipping) saat level tinggi."
+          },
+          {
+            "name": "Loudness",
+            "desc": "Kompensasi loudness agar keseimbangan frekuensi tetap enak didengar pada volume rendah maupun tinggi."
+          },
+          {
+            "name": "DC Blocker",
+            "desc": "Menyaring offset DC yang tidak diinginkan dari sinyal audio, menjaga kebersihan sinyal."
+          },
+          {
+            "name": "Stereo Widening",
+            "desc": "Memperluas kesan lebar soundstage stereo agar terdengar lebih spasial."
+          },
+          {
+            "name": "Spatial Clarity",
+            "desc": "Meningkatkan kejernihan dan pemisahan detail posisi instrumen/vokal dalam mix."
+          },
+          {
+            "name": "Surround",
+            "desc": "Efek pemrosesan tambahan untuk memberi nuansa surround pada output stereo."
+          },
+          {
+            "name": "Reverb",
+            "desc": "Menambahkan ambience/ruang pada suara agar tidak terdengar terlalu \"kering\"."
+          },
+          {
+            "name": "Master Volume",
+            "desc": "Kontrol volume akhir sebelum sinyal keluar dari chain DSP."
+          },
+          {
+            "name": "Final Soft Clipper",
+            "desc": "Pengaman terakhir untuk mencegah overload/distorsi sebelum sinyal dikirim ke tahap output PCM."
+          }
+        ]
       }
     ],
-    "aboutEyebrow": "Tentang",
-    "aboutTitle": "Tentang FuruHibi",
-    "aboutP1": "<strong>FuruHibi</strong> berasal dari bahasa Jepang: <strong>furu</strong> (古) yang berarti \"lama, kuno, vintage\", dan <strong>hibi</strong> (日々) yang berarti \"hari-hari\". Secara filosofis, nama ini bermakna \"hari-hari yang telah berlalu\" — kenangan dari masa lampau.",
-    "aboutP2": "Bagi kami, audio bukan sekadar spesifikasi dan angka pengukuran. Audio adalah tentang bagaimana musik menghadirkan emosi, membangkitkan kenangan, dan menemani keseharian."
+    "sbfg": {
+      "title": "Cara Kerja Staging Buffer → Fixed Audio Block Generator",
+      "sub": "Paket USB berukuran acak masuk, ditumpuk di staging buffer, dikuras jadi blok tetap frame-aligned, dikirim ke ring buffer, lalu consumer selalu mengeluarkan blok berukuran tetap (atau silence saat kosong).",
+      "play": "▶ Mulai",
+      "pause": "⏸ Jeda",
+      "step": "Step",
+      "reset": "Reset",
+      "speedLabel": "Kecepatan:",
+      "speeds": [
+        "Lambat",
+        "Normal",
+        "Cepat"
+      ],
+      "readyStatus": "Siap. Tekan Mulai atau Step.",
+      "legend": [
+        "Paket USB (ukuran acak)",
+        "Staging Buffer",
+        "Ring Buffer (NOSPLIT)",
+        "Blok Tetap ke Callback",
+        "Silence (underrun)"
+      ],
+      "stats": [
+        "Blok terkirim",
+        "Item di ring buffer",
+        "Underrun (silence)",
+        "Sisa di staging"
+      ]
+    },
+    "qbuf": {
+      "title": "Cara Kerja Quad Audio Buffer",
+      "inLabel": "DATA MASUK",
+      "inShort": "MASUK",
+      "outLabel": "DATA KELUAR",
+      "outShort": "KELUAR",
+      "labels": [
+        "kosong",
+        "diisi",
+        "siap",
+        "diproses"
+      ],
+      "caption": "Empat buffer bergiliran status: <strong>kosong → diisi → siap → diproses</strong>. Panah \"masuk\" berpindah setelah buffer penuh terisi, panah \"keluar\" berpindah setelah buffer habis dikonsumsi — sehingga penerimaan USB dan pemrosesan DSP berjalan paralel tanpa saling menunggu."
+    },
+    "dspFx": {
+      "title": "Cara Kerja Setiap Efek DSP",
+      "sub": "Pilih salah satu modul untuk melihat animasi sederhana bagaimana sinyal audio berubah saat melewati efek tersebut.",
+      "legend": [
+        "Sinyal Input",
+        "Sinyal Setelah Diproses"
+      ],
+      "effects": {
+        "eq": {
+          "label": "Parametric EQ",
+          "desc": "<strong>Parametric EQ</strong> menaikkan atau menurunkan level pada pita frekuensi tertentu (Low / Mid / High). Kurva biru menunjukkan respons frekuensi — pita yang di-boost akan 'menonjol' dari garis datar 0 dB."
+        },
+        "loudness": {
+          "label": "Loudness",
+          "desc": "<strong>Loudness</strong> menambah bass &amp; treble ketika volume diputar rendah, mengikuti karakter telinga manusia (Fletcher–Munson) supaya balance frekuensi tetap terasa penuh walau pelan."
+        },
+        "widening": {
+          "label": "Stereo Widening",
+          "desc": "<strong>Stereo Widening</strong> memperbesar perbedaan kanal kiri &amp; kanan sehingga kesan lebar soundstage bertambah — channel L dan R yang tadinya hampir identik dibuat lebih 'terpisah'."
+        },
+        "surround": {
+          "label": "Surround",
+          "desc": "<strong>Surround</strong> menambahkan efek diffusion ke output stereo agar terdengar seperti dikelilingi ruang suara, bukan sekadar keluar dari dua titik speaker."
+        },
+        "clipper": {
+          "label": "Soft Clipper",
+          "desc": "<strong>Soft Clipper</strong> membulatkan puncak sinyal yang terlalu tinggi secara halus, alih-alih memotongnya secara kasar (hard clip) yang menyebabkan distorsi tajam."
+        },
+        "clarity": {
+          "label": "Spatial Clarity",
+          "desc": "<strong>Spatial Clarity</strong> memperjelas pemisahan posisi instrumen &amp; vokal dalam mix, dari yang terasa menumpuk menjadi lebih 'terpisah' dan detail."
+        },
+        "reverb": {
+          "label": "Reverb",
+          "desc": "<strong>Reverb</strong> menambahkan pantulan ruang (ambience) setelah bunyi asli, berupa rangkaian gema yang meluruh (decay) agar suara tidak terdengar terlalu 'kering'."
+        }
+      }
+    },
+    "blockEyebrow": "Architecture",
+    "blockTitle": "FuruHibiR2R Block & Routing Diagram",
+    "blockDesc": "Block & Routing Diagram FuruHibiR2R",
+    "blockAlt": "FuruHibiR2R Block & Routing Diagram",
+    "blockGroupTitle": "Fungsi Block",
+    "blockSteps": [
+      {
+        "name": "Battery Charger",
+        "desc": "Modul charger baterai dengan arus limit 1A dan auto cut off saat baterai penuh."
+      },
+      {
+        "name": "Battery",
+        "desc": "Baterai 1S,menggunakan dual baterai 3500mAh."
+      },
+      {
+        "name": "Rotary Encoder",
+        "desc": "Encoder putar dan tekan untuk kontrol OLED."
+      },
+      {
+        "name": "LDO",
+        "desc": "Low Dropout Regulator,menggunakan LDO low power agar tidak membebani baterai saat keadaan sleep."
+      },
+      {
+        "name": "MCU Main",
+        "desc": "Ditenagai oleh ESP32S3 dualcore 240Mhz,kontrol sistem utama dan handle DSP serta UAC dalam sistem DAC FuruHibiR2R."
+      },
+      {
+        "name": "MCU BT Receiver",
+        "desc": "Ditenagai oleh ESP32D0WD(ESP32-Wroom) dualcore 240Mhz, modul bluetooth tambahan untuk menerima audio via Bluetooth."
+      },
+      {
+        "name": "Main Symmetric Step UP",
+        "desc": "Menaikkan tegangan baterai 4.2V menjadi simetris diatas 7V."
+      },
+      {
+        "name": "RC Filter dan Filter Stage 2",
+        "desc": "Filter pasif RC dan stage kedua untuk menghaluskan ripple power supply."
+      },
+      {
+        "name": "Discrete LDO",
+        "desc": "menggunakan LDO discrete,output fixed 7V simetris."
+      },
+      {
+        "name": "Dual R2R DAC",
+        "desc": "Dual R2R DAC Monolithic dengan resolusi 16-bit untuk menghasilkan sinyal audio analog dengan metode resistor ladder."
+      },
+      {
+        "name": "I/V Stage",
+        "desc": "Merubah sinyal output dac berupa Arus menjadi Tegangan."
+      },
+      {
+        "name": "LPF",
+        "desc": "Low Pass Filter pasif dengan metode butterworth 4nd order."
+      },
+      {
+        "name": "PRE AMP",
+        "desc": "Penguat gain dengan support hotswap."
+      },
+      {
+        "name": "Buffer",
+        "desc": "Buffer output untuk menguatkan arus dari preamp."
+      }
+    ],
+    "aboutEyebrow": "About FuruHibi",
+    "aboutTitle": "Dirancang dan dikembangkan oleh seorang DIY audio dongo.",
+    "aboutP1": "Bagi kami, audio bukan sekadar spesifikasi dan angka pengukuran. Audio adalah tentang bagaimana musik menghadirkan emosi, membangkitkan kenangan, dan menemani keseharian.",
+    "aboutP2": "Terima kasih telah berkunjung. Jika ada pertanyaan atau bug pada DSP, silakan hubungi lewat tautan di bawah.",
+    "aboutPhotoAlt": "Ilustrasi pembuat FuruHibi",
+    "aboutSocialAbout": "Tentang Saya",
+    "aboutSocialChat": "Chat Saya (FB)",
+    "presets": {
+      "metaTitle": "Cloud PEQ Presets",
+      "title": "☁ Cloud PEQ Presets",
+      "sub": "Preset PEQ & DSP yang disimpan bersama oleh pengguna FuruHibi R2R",
+      "back": "← Beranda",
+      "dspAdjust": "⚙ DSP Adjust",
+      "device": {
+        "idle": "Perangkat belum terhubung",
+        "connected": "Terhubung: {name}",
+        "connect": "🔗 Connect Device",
+        "disconnect": "Disconnect",
+        "noBluetooth": "Browser ini tidak mendukung Web Bluetooth. Gunakan Chrome/Edge di desktop atau Android.",
+        "connectFail": "Koneksi Bluetooth gagal atau perangkat tidak ditemukan."
+      },
+      "search": {
+        "placeholder": "Cari nama preset atau nama user...",
+        "clear": "Hapus pencarian"
+      },
+      "peq": {
+        "title": "🎚 Preset PEQ",
+        "loading": "Memuat daftar preset PEQ...",
+        "empty": "Belum ada preset PEQ yang disimpan. Jadilah yang pertama lewat halaman DSP Adjust!",
+        "loadFail": "Gagal memuat preset PEQ: ",
+        "noMatch": "Tidak ada preset PEQ yang cocok dengan pencarian."
+      },
+      "dsp": {
+        "title": "🎛 Preset DSP",
+        "desc": "Pre-Gain, Master Volume, Loudness, Stereo Width, Surround, Reverb, Spatial Clarity",
+        "loading": "Memuat daftar preset DSP...",
+        "empty": "Belum ada preset DSP yang disimpan. Jadilah yang pertama lewat halaman DSP Adjust!",
+        "loadFail": "Gagal memuat preset DSP: ",
+        "noMatch": "Tidak ada preset DSP yang cocok dengan pencarian."
+      },
+      "cards": {
+        "openDsp": "Buka di DSP Adjust →",
+        "apply": "⚡ Terapkan ke Device",
+        "byAuthor": "oleh {name}",
+        "noBand": "Tidak ada data band",
+        "on": "Aktif",
+        "off": "Bypass"
+      },
+      "apply": {
+        "sending": "Mengirim ke device...",
+        "ok": "✓ Berhasil diterapkan ke device",
+        "fail": "Gagal mengirim: "
+      }
+    },
+    "downloads": {
+      "metaTitle": "Download Center",
+      "eyebrow": "Download Center",
+      "heading": "Companion app untuk Windows dan Android.",
+      "intro": "Unduh versi terbaru companion app dan firmware FuruHibi. Firmware utama (Main FW) dan firmware Bluetooth (BT Sink) dipisah, jadi pilih sesuai yang ingin Anda update. Setiap kartu menampilkan file terbaru beserta riwayat rilis sebelumnya.",
+      "loading": "Memuat...",
+      "latestLabel": "Latest file",
+      "download": "Download ({size})",
+      "empty": "Belum ada file",
+      "loadFail": "Gagal memuat: ",
+      "history": "Release History",
+      "cards": [
+        {
+          "name": "Windows",
+          "tag": "Desktop App"
+        },
+        {
+          "name": "Android",
+          "tag": "Mobile App"
+        },
+        {
+          "name": "Firmware Main",
+          "tag": "Main FW",
+          "desc": "Firmware utama FuruHibi R2R DAC (ESP32S3)."
+        },
+        {
+          "name": "Firmware BT Sink",
+          "tag": "Bluetooth",
+          "desc": "Firmware modul Bluetooth receiver (BT Sink)."
+        }
+      ]
+    }
   }
 }
