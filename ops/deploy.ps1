@@ -97,18 +97,23 @@ foreach ($slug in $liveSlugs) {
 }
 
 # FuruHibi's companion pages (Cloud PEQ Presets + Download Center) — the
-# hub build emits them beside the landing, and they overlay like
-# index.html (the per-site mirror above restores the live site's own
+# hub build emits them as folders beside the landing, so the extensionless
+# routes (/furuhibi/preset, /furuhibi/download) resolve as directory
+# indexes (the per-site mirror above restores the live site's original
 # files first; everything else in the folder stays untouched).
 $furuDst = "$sites\projects\furuhibi"
-foreach ($subpage in @('preset.html', 'download.html')) {
+foreach ($subpage in @('preset', 'download')) {
     $subSrc = "$repos\hibi\dist-hub\furuhibi\$subpage"
     if ((Test-Path $subSrc) -and (Test-Path $furuDst)) {
-        Copy-Item $subSrc "$furuDst\$subpage" -Force
-        Write-Host "      furuhibi <- $subpage"
+        Copy-Item $subSrc "$furuDst\$subpage" -Recurse -Force
+        Write-Host "      furuhibi <- $subpage/"
     } else {
-        Write-Warning "      furuhibi $subpage skipped — source or target folder missing"
+        Write-Warning "      furuhibi $subpage skipped — source folder or target missing"
     }
+    # The per-site mirror re-created the live site's original .html page
+    # on every run — drop it so only the clean route serves (legacy links
+    # then fall through to the SPA). dsp.html is box-only and untouched.
+    Remove-Item "$furuDst\$subpage.html" -Force -ErrorAction SilentlyContinue
 }
 
 # The dashboard page gets the same treatment: dist-hub/dash/index.html on

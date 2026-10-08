@@ -9,7 +9,7 @@ withDefaults(
     /** FuruHibi DSP app URL (hub passes a relative path). */
     dspHref?: string
   }>(),
-  { dspHref: 'https://project.nyaahibi.web.id/furuhibi/dsp.html' },
+  { dspHref: 'https://project.nyaahibi.web.id/furuhibi/dsp' },
 )
 
 const { t } = useI18n()

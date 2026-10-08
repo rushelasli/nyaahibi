@@ -11,7 +11,7 @@ withDefaults(
     landingHref?: string
   }>(),
   {
-    dspHref: 'https://project.nyaahibi.web.id/furuhibi/dsp.html',
+    dspHref: 'https://project.nyaahibi.web.id/furuhibi/dsp',
     landingHref: 'https://project.nyaahibi.web.id/furuhibi/',
   },
 )

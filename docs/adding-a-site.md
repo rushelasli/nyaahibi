@@ -23,7 +23,7 @@ export const hubSites: HubSite[] = [
   { slug: 'myslug', status: 'live' },       // or 'soon'
   // optional fields:
   //   model: '/dash/MyModel.glb',          → 3D preview on the dashboard card
-  //   extra: { label: 'WebUSB DSP', href: '/myslug/dsp.html' },  → second button
+  //   extra: { label: 'WebUSB DSP', href: '/myslug/dsp' },          → second button
 ]
 ```
 

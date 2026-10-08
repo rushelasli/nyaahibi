@@ -15,9 +15,9 @@ const props = withDefaults(
     anchorBase?: string
   }>(),
   {
-    dspHref: 'https://project.nyaahibi.web.id/furuhibi/dsp.html',
-    presetsHref: 'https://project.nyaahibi.web.id/furuhibi/preset.html',
-    downloadHref: 'https://project.nyaahibi.web.id/furuhibi/download.html',
+    dspHref: 'https://project.nyaahibi.web.id/furuhibi/dsp',
+    presetsHref: 'https://project.nyaahibi.web.id/furuhibi/preset',
+    downloadHref: 'https://project.nyaahibi.web.id/furuhibi/download',
     anchorBase: '',
   },
 )

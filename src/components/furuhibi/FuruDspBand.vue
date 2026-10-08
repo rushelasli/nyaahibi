@@ -12,8 +12,8 @@ withDefaults(
     presetsHref?: string
   }>(),
   {
-    dspHref: 'https://project.nyaahibi.web.id/furuhibi/dsp.html',
-    presetsHref: 'https://project.nyaahibi.web.id/furuhibi/preset.html',
+    dspHref: 'https://project.nyaahibi.web.id/furuhibi/dsp',
+    presetsHref: 'https://project.nyaahibi.web.id/furuhibi/preset',
   },
 )
 

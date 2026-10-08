@@ -39,16 +39,16 @@ to a view:
                  → MainLanding       (main.html: what NyaaHibi is + gateways)
 /<slug>/         → detail page       (detailPages map in src/hub/HubApp.vue)
 /dash/           → DashboardPage     (src/hub/DashboardPage.vue)
-/furuhibi/preset.html    → FuruhibiPresetsPage   (subPages map)
-/furuhibi/download.html  → FuruhibiDownloadPage  (subPages map)
+/furuhibi/preset         → FuruhibiPresetsPage   (subPages map)
+/furuhibi/download       → FuruhibiDownloadPage  (subPages map)
 anything else    → the entry's own landing ("soon" slugs land on HubLanding)
 ```
 
 `vite.hub.config.ts` writes a per-slug `index.html` (with that project's own
 `<title>`/`og:` meta for crawlers) into `dist-hub/<slug>/` at build time,
-`dist-hub/dash/index.html` for the dashboard, and — because they are real
-file URLs rather than folders — `dist-hub/furuhibi/preset.html` and
-`dist-hub/furuhibi/download.html` for the two FuruHibi sub-pages.
+`dist-hub/dash/index.html` for the dashboard, and — as folders, so the
+routes stay extensionless — `dist-hub/furuhibi/preset/index.html` and
+`dist-hub/furuhibi/download/index.html` for the two FuruHibi sub-pages.
 `deploy.ps1` then overlays those files onto the server's folders;
 `dist-hub/main.html` ships with the root mirror as-is (the apex Caddy
 block serves it at `/`).
@@ -111,7 +111,7 @@ portfolio keeps only `/`.
 C:\srv\sites\hibi       ← dist/          (portfolio — deployed by rushelasli/ulilhibi)
 C:\srv\sites\projects   ← dist-hub/      (hub landing at root, main.html alongside)
     ├── <slug>/         ← per-site clones, with dist-hub/<slug>/index.html overlaid
-    │                     (furuhibi/ also gets preset.html + download.html overlaid)
+    │                     (furuhibi/ also gets preset/ + download/ overlaid)
     └── dash/           ← legacy box-side assets, with dist-hub/dash/index.html overlaid
 ```
 

@@ -77,19 +77,21 @@ function hubSlugPages(): Plugin {
           url: `${PROJECTS_BASE}/dash`,
         }),
       )
-      // FuruHibi sub-pages — real files beside the landing so the box
-      // serves them directly (deploy.ps1 overlays them onto the slug
-      // folder); HubApp routes them by pathname like the detail pages.
+      // FuruHibi sub-pages — real folders beside the landing so the
+      // extensionless URLs (/furuhibi/preset) resolve as a directory
+      // index on any static host; deploy.ps1 overlays them onto the
+      // slug folder; HubApp routes them by pathname like the detail
+      // pages. og:url is the clean route, never the emitted file.
       const subHeads: Record<string, PageHead> = {
-        'furuhibi/preset.html': {
+        'furuhibi/preset/index.html': {
           title: `Cloud PEQ Presets — ${en.hub.title}`,
           desc: en.furuhibi.presets.sub,
-          url: `${PROJECTS_BASE}/furuhibi/preset.html`,
+          url: `${PROJECTS_BASE}/furuhibi/preset`,
         },
-        'furuhibi/download.html': {
+        'furuhibi/download/index.html': {
           title: `Download Center — ${en.hub.title}`,
           desc: en.furuhibi.downloads.intro,
-          url: `${PROJECTS_BASE}/furuhibi/download.html`,
+          url: `${PROJECTS_BASE}/furuhibi/download`,
         },
       }
       for (const [rel, head] of Object.entries(subHeads)) {
@@ -114,15 +116,22 @@ function hubDevRouter(): Plugin {
   return {
     name: 'hub-dev-router',
     configureServer(server) {
-      server.middlewares.use((req, _res, next) => {
+      server.middlewares.use((req, res, next) => {
         const url = req.url
         if (!url || (req.method !== 'GET' && req.method !== 'HEAD')) return next()
         const pathname = url.split('?', 1)[0]
         const q = url.indexOf('?')
         const suffix = q === -1 ? '' : url.slice(q)
-        // FuruHibi sub-pages are real files in production (written by
-        // hubSlugPages); they don't exist on disk in dev — serve the hub
-        // entry so HubApp reads the real pathname instead.
+        // The WebUSB DSP app stays box-hosted (dsp.html is not in this
+        // repo) — hand the request to the live build instead of a 404.
+        if (pathname === '/furuhibi/dsp' || pathname === '/furuhibi/dsp.html') {
+          res.writeHead(302, { Location: 'https://project.nyaahibi.web.id/furuhibi/dsp.html' })
+          res.end()
+          return
+        }
+        // Legacy .html sub-page links render the hub entry so HubApp can
+        // normalise the path itself; the clean /furuhibi/{preset,
+        // download} routes have no dot and hit the catch-all below.
         if (pathname === '/furuhibi/preset.html' || pathname === '/furuhibi/download.html') {
           req.url = `/hub.html${suffix}`
           return next()

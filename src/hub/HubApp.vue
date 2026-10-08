@@ -46,40 +46,44 @@ const detailPages: Record<string, DetailPage> = {
   furuhibi: {
     comp: FuruhibiProject,
     props: {
-      dspHref: '/furuhibi/dsp.html',
-      presetsHref: '/furuhibi/preset.html',
-      downloadHref: '/furuhibi/download.html',
+      dspHref: '/furuhibi/dsp',
+      presetsHref: '/furuhibi/preset',
+      downloadHref: '/furuhibi/download',
     },
   },
 }
 
-/** FuruHibi sub-pages — emitted as real files beside the landing
- *  (dist-hub/furuhibi/{preset,download}.html) and routed by pathname
- *  exactly like the folder detail pages. */
+/** FuruHibi sub-pages — emitted as real folders beside the landing
+ *  (dist-hub/furuhibi/{preset,download}/index.html) and routed by
+ *  pathname exactly like the folder detail pages. Keys are the clean
+ *  extensionless routes; detailPath also strips a legacy ".html". */
 const subPages: Record<string, DetailPage> = {
-  '/furuhibi/preset.html': {
+  '/furuhibi/preset': {
     comp: FuruhibiPresetsPage,
-    props: { dspHref: '/furuhibi/dsp.html', landingHref: '/furuhibi' },
+    props: { dspHref: '/furuhibi/dsp', landingHref: '/furuhibi' },
   },
-  '/furuhibi/download.html': {
+  '/furuhibi/download': {
     comp: FuruhibiDownloadPage,
     props: {
-      dspHref: '/furuhibi/dsp.html',
-      presetsHref: '/furuhibi/preset.html',
-      downloadHref: '/furuhibi/download.html',
+      dspHref: '/furuhibi/dsp',
+      presetsHref: '/furuhibi/preset',
+      downloadHref: '/furuhibi/download',
     },
   },
 }
 
 /** Locale key driving each sub-page's <title> (see vite.hub.config's heads). */
 const subPageTitle: Record<string, string> = {
-  '/furuhibi/preset.html': 'furuhibi.presets.metaTitle',
-  '/furuhibi/download.html': 'furuhibi.downloads.metaTitle',
+  '/furuhibi/preset': 'furuhibi.presets.metaTitle',
+  '/furuhibi/download': 'furuhibi.downloads.metaTitle',
 }
 
 const detailPath = computed(() => {
   const raw = props.initialPath ?? '/'
-  const cleaned = raw.replace(/\/index\.html$/, '').replace(/\/+$/, '')
+  const cleaned = raw
+    .replace(/\/index\.html$/, '')
+    .replace(/\.html$/, '')
+    .replace(/\/+$/, '')
   return cleaned === '' ? '/' : cleaned
 })
 
@@ -151,7 +155,7 @@ watch(locale, syncDocumentMeta)
       </header>
 
       <!-- Dashboard at /dash/, FuruHibi sub-pages at /furuhibi/{preset,
-           download}.html, detail page for the five live sites (back goes
+           download}, detail page for the five live sites (back goes
            to the hub landing); anything else renders the landing —
            the explanatory main site when the entry says so, the projects
            landing otherwise -->

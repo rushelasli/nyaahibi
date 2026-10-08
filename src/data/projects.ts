@@ -44,6 +44,6 @@ export const hubSites: HubSite[] = [
   {
     slug: 'furuhibi',
     status: 'live',
-    extra: { label: 'WebUSB DSP', href: '/furuhibi/dsp.html' },
+    extra: { label: 'WebUSB DSP', href: '/furuhibi/dsp' },
   },
 ]

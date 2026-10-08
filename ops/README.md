@@ -74,8 +74,9 @@ C:\srv\sites\projects        served hub:
      survives) → per-site folders → **hub detail-page overlay** (copies
      `dist-hub\<slug>\index.html` onto each live site folder, after the
      mirrors restored the old sites; slugs are derived from `hubSites`;
-     `furuhibi` additionally gets `preset.html` + `download.html`, the
-     two emitted sub-pages).
+     `furuhibi` additionally gets the `preset/` + `download/` folders,
+     the two emitted sub-pages (their stale `.html` originals are
+     removed).
    - The portfolio's run (its own script) builds `dist/`, runs its SSR
      gate, and mirrors to `C:\srv\sites\hibi`.
    - Local-only gate: `python3 ops/check_classes.py` (after
@@ -117,13 +118,15 @@ C:\srv\sites\projects        served hub:
   slug so local previews behave like the deployed folders, and
   `deploy.ps1` overlays the same file onto each live site folder after
   the per-site mirrors.
-- **FuruHibi sub-pages** (`/furuhibi/preset.html` Cloud PEQ Presets,
-  `/furuhibi/download.html` Download Center) route the same way —
+- **FuruHibi sub-pages** (`/furuhibi/preset` Cloud PEQ Presets,
+  `/furuhibi/download` Download Center) route the same way —
   `HubApp`'s `subPages` map picks the composer from the pathname. They
-  are **real files**, not folders: `vite.hub.config.ts` emits them beside
-  the landing with their own `<title>`/description heads, and
-  `deploy.ps1` overlays them onto the box's `furuhibi/` folder (which
-  keeps `dsp.html` and the assets box-side). The Vue ports talk to the
+  are **folders**, not `.html` files: `vite.hub.config.ts` emits
+  `dist-hub/furuhibi/{preset,download}/index.html` beside the landing
+  with their own `<title>`/description heads, and `deploy.ps1` overlays
+  them onto the box's `furuhibi/` folder (which keeps `dsp.html` and
+  the assets box-side; the clean `/furuhibi/dsp` route reaches that
+  file through Caddy's `try_files {path}.html`). The Vue ports talk to the
   same `app.nyaahibi.web.id` APIs as the live pages
   (`/api/presets`, `/api/dsp-presets`, `/api/downloads/<category>`).
 - **Dashboard (`/dash/`)** — the old standalone `dash/` HTML rebuilt in

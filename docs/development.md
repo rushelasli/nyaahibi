@@ -27,8 +27,8 @@ bun run dev:hub    # hub + main + /dash + /<slug> → http://localhost:5174/
 | `http://localhost:5174/main.html` | Main-site landing (the apex `nyaahibi.web.id` interface) |
 | `http://localhost:5174/dash` | Dashboard |
 | `http://localhost:5174/nyaahibiv2` | That slug's detail page (all five work) |
-| `http://localhost:5174/furuhibi/preset.html` | FuruHibi Cloud PEQ Presets sub-page |
-| `http://localhost:5174/furuhibi/download.html` | FuruHibi Download Center sub-page |
+| `http://localhost:5174/furuhibi/preset` | FuruHibi Cloud PEQ Presets sub-page |
+| `http://localhost:5174/furuhibi/download` | FuruHibi Download Center sub-page |
 
 (The portfolio's dev server — port 5173 — lives in
 [rushelasli/ulilhibi](https://github.com/rushelasli/ulilhibi).)
@@ -39,15 +39,18 @@ bun run dev:hub    # hub + main + /dash + /<slug> → http://localhost:5174/
 with the split), and `HubApp` picks the page from the real
 `window.location.pathname` — the same routing the deployed site uses,
 but with HMR. Real files such as `/main.html` pass straight through, and
-the two FuruHibi sub-paths (`/furuhibi/preset.html`,
-`/furuhibi/download.html`) are special-cased to the shell — in production
-they are real emitted files, in dev they don't exist on disk.
+legacy `.html` FuruHibi links (`/furuhibi/preset.html`,
+`/furuhibi/download.html`) are special-cased to the shell — `HubApp`
+normalises the path, so old shared URLs still land on the sub-page.
 
-Box-only files don't exist in the repo, and dev mirrors production's
-`try_files` fallback for them: `/furuhibi/dsp.html`,
-`/dash/comingsoon.html`, and the GLB models under `/dash/` all serve the
-HTML shell locally (model cards show gray panels). They work once
-deployed, where those files live on the server box.
+Box-only files don't exist in the repo. `/furuhibi/dsp` (and its legacy
+`.html` form) 302-redirects to the live box, where the WebUSB app lives;
+`/dash/comingsoon.html` and the GLB models under `/dash/` serve the HTML
+shell locally (model cards show gray panels). They work once deployed,
+where those files live on the server box. On the server, Caddy's
+`try_files {path} {path}.html {path}/index.html …` maps the extensionless
+routes onto the static files — keep `ops/Caddyfile` and the box config in
+sync.
 
 For a production-shaped check — the generated per-slug, `/dash/`, and
 FuruHibi sub-page folders with their injected `<title>`s — build and
@@ -57,7 +60,7 @@ preview instead:
 bun run build:hub
 bun run preview:hub
 # → http://localhost:4173/  ·  /dash/  ·  /furuhibi/  ·  /nyaahibiv2/
-#   /furuhibi/preset.html  ·  /furuhibi/download.html
+#   /furuhibi/preset/  ·  /furuhibi/download/  (slash = the emitted folder's own <title>)
 ```
 
 (`deploy.ps1` and the gate commands copy `hub.html` → `index.html` in

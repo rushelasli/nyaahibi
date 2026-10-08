@@ -24,11 +24,14 @@ ulilhibi.my.id:8080 {
 # Landing page (dist-hub) sits at the root; each site is a folder under
 # C:/srv/sites/projects. project.nyaahibi.web.id is the canonical URL in
 # code (PROJECTS_BASE, og:url, registry links).
+# try_files also tries "{path}.html" (legacy box files like dsp.html) and
+# "{path}/index.html" (the emitted extensionless routes /furuhibi/preset,
+# /furuhibi/download) so no .html ever appears in a link.
 project.nyaahibi.web.id:8080 {
 	bind 127.0.0.1
 	root * C:/srv/sites/projects
 	encode gzip
-	try_files {path} /index.html
+	try_files {path} {path}.html {path}/index.html /index.html
 	file_server
 
 	@assets path /assets/*
@@ -45,9 +48,11 @@ nyaahibi.web.id:8080 {
 	encode gzip
 
 	# Exact root → main.html; unknown paths fall back to it as well.
+	# "{path}.html" and "{path}/index.html" keep the extensionless routes
+	# working here too.
 	@root path /
 	rewrite @root /main.html
-	try_files {path} /main.html
+	try_files {path} {path}.html {path}/index.html /main.html
 	file_server
 
 	@assets path /assets/*

@@ -196,7 +196,7 @@ const detailMarkers: Record<string, string> = {
   nyaahibiv2: '/projects/amp/TopologiAmp.png',
   microhibiamp: '/projects/microamp/maskot.jpg',
   tubeseamp: '/projects/tubeseamp/tubese.glb',
-  furuhibi: '/furuhibi/dsp.html',
+  furuhibi: '/furuhibi/dsp',
 }
 
 const detailOutputs: Record<string, string> = {}
@@ -287,16 +287,16 @@ try {
 }
 
 // ---------------------------------------------------------------------------
-// FuruHibi sub-pages — /furuhibi/{preset,download}.html are emitted beside
-// the landing and route through the same app by pathname. One content
-// marker per page: copy only that page renders.
+// FuruHibi sub-pages — /furuhibi/{preset,download} are emitted as
+// folders beside the landing and route through the same app by pathname.
+// One content marker per page: copy only that page renders.
 const subPageTests: Record<string, { path: string; marker: string }> = {
   'furuhibi-preset': {
-    path: '/furuhibi/preset.html',
+    path: '/furuhibi/preset',
     marker: 'furuhibi.presets.device.connect', // "🔗 Connect Device"
   },
   'furuhibi-download': {
-    path: '/furuhibi/download.html',
+    path: '/furuhibi/download',
     marker: 'furuhibi.downloads.heading', // "Companion app untuk Windows dan Android."
   },
 }
@@ -328,7 +328,7 @@ for (const [key, spec] of Object.entries(subPageTests)) {
 
       // Page content + links back into the FuruHibi app
       if (!rendered(html, i18n.global.t(spec.marker))) failures.push(`${tag}: content marker missing`)
-      if (!html.includes('href="/furuhibi/dsp.html"')) failures.push(`${tag}: DSP app link missing`)
+      if (!html.includes('href="/furuhibi/dsp"')) failures.push(`${tag}: DSP app link missing`)
       const backToLanding = html.includes('href="/furuhibi"') || html.includes('href="/furuhibi#')
       if (!backToLanding) failures.push(`${tag}: landing back link missing`)
 
@@ -392,7 +392,7 @@ for (const locale of ['id', 'en'] as const) {
     // Signature assets: profile photo, a card GLB, FuruHibi's WebUSB panel
     if (!html.includes('/dash/gwe.png')) failures.push(`${tag}: profile photo missing`)
     if (!html.includes('/dash/NyaaHibiV2.glb')) failures.push(`${tag}: card GLB preview missing`)
-    if (!html.includes('href="/furuhibi/dsp.html"')) failures.push(`${tag}: WebUSB link missing`)
+    if (!html.includes('href="/furuhibi/dsp"')) failures.push(`${tag}: WebUSB link missing`)
 
     // About goes to the portfolio; the FB chat link stays as-is
     if (!html.includes(`href="${PORTFOLIO_BASE}/#about"`)) {
@@ -477,6 +477,13 @@ for (const locale of ['id', 'en'] as const) {
   } catch (e) {
     failures.push(`${tag}: THREW ${(e as Error).stack ?? e}`)
   }
+}
+
+// Every render must link the furuhibi apps by their clean routes —
+// no internal .html href may survive anywhere.
+for (const [tag, html] of [...Object.entries(outputs), ...Object.entries(detailOutputs)]) {
+  const leak = html.match(/href="\/furuhibi\/[^"]*\.html"/)
+  if (leak) failures.push(`${tag}: legacy .html furuhibi link rendered -> ${leak[0]}`)
 }
 
 // Per page, the two locales must produce genuinely different HTML

@@ -17,7 +17,7 @@ const props = withDefaults(
      */
     dspHref?: string
   }>(),
-  { dspHref: 'https://project.nyaahibi.web.id/furuhibi/dsp.html' },
+  { dspHref: 'https://project.nyaahibi.web.id/furuhibi/dsp' },
 )
 
 const { t } = useI18n()
