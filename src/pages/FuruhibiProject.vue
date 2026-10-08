@@ -8,7 +8,6 @@ import FuruPhilosophy from '@/components/furuhibi/FuruPhilosophy.vue'
 import FuruSpecs from '@/components/furuhibi/FuruSpecs.vue'
 import FuruPipeline from '@/components/furuhibi/FuruPipeline.vue'
 import FuruBlockDiagram from '@/components/furuhibi/FuruBlockDiagram.vue'
-import FuruAbout from '@/components/furuhibi/FuruAbout.vue'
 
 /** Set by the projects hub (no router); when omitted, falls back to a router link. */
 defineProps<{
@@ -31,6 +30,5 @@ defineProps<{
     <FuruSpecs />
     <FuruPipeline />
     <FuruBlockDiagram />
-    <FuruAbout />
   </main>
 </template>

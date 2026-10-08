@@ -713,7 +713,6 @@
       "software": "Software",
       "dsp": "DSP",
       "downloads": "Downloads",
-      "about": "About",
       "openDsp": "Open DSP",
       "cloudPresets": "Cloud Presets"
     },
@@ -1073,13 +1072,6 @@
         "desc": "Buffer output untuk menguatkan arus dari preamp."
       }
     ],
-    "aboutEyebrow": "About FuruHibi",
-    "aboutTitle": "Dirancang dan dikembangkan oleh seorang DIY audio dongo.",
-    "aboutP1": "Bagi kami, audio bukan sekadar spesifikasi dan angka pengukuran. Audio adalah tentang bagaimana musik menghadirkan emosi, membangkitkan kenangan, dan menemani keseharian.",
-    "aboutP2": "Terima kasih telah berkunjung. Jika ada pertanyaan atau bug pada DSP, silakan hubungi lewat tautan di bawah.",
-    "aboutPhotoAlt": "Ilustrasi pembuat FuruHibi",
-    "aboutSocialAbout": "Tentang Saya",
-    "aboutSocialChat": "Chat Saya (FB)",
     "presets": {
       "metaTitle": "Cloud PEQ Presets",
       "title": "☁ Cloud PEQ Presets",

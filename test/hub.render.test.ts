@@ -242,8 +242,12 @@ for (const [slug, ns] of Object.entries(detailPages)) {
       if (!html.includes('href="/"')) failures.push(`${tag}: back-to-hub link missing`)
       if (!rendered(html, i18n.global.t(`${ns}.back`))) failures.push(`${tag}: back label missing`)
 
-      // Content: this page's about copy + its signature asset
-      if (!rendered(html, i18n.global.t(`${ns}.aboutTitle`))) {
+      // Content: this page's about copy + its signature asset.
+      // The FuruHibi landing has no About section — the developer profile
+      // at the bottom was dropped on purpose.
+      if (slug === 'furuhibi') {
+        if (html.includes('id="about"')) failures.push(`${tag}: About section must not render`)
+      } else if (!rendered(html, i18n.global.t(`${ns}.aboutTitle`))) {
         failures.push(`${tag}: about title missing`)
       }
       if (!html.includes(detailMarkers[slug])) {

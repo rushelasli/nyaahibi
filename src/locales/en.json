@@ -713,7 +713,6 @@
       "software": "Software",
       "dsp": "DSP",
       "downloads": "Downloads",
-      "about": "About",
       "openDsp": "Open DSP",
       "cloudPresets": "Cloud Presets"
     },
@@ -1073,13 +1072,6 @@
         "desc": "Output buffer that boosts current from the preamp."
       }
     ],
-    "aboutEyebrow": "About FuruHibi",
-    "aboutTitle": "Designed and developed by a clueless DIY audio tinkerer.",
-    "aboutP1": "For us, audio is not just specifications and measurement figures. Audio is about how music brings out emotion, awakens memories, and accompanies everyday life.",
-    "aboutP2": "Thanks for visiting. If you have questions or found a DSP bug, reach out through the links below.",
-    "aboutPhotoAlt": "Illustration of the FuruHibi creator",
-    "aboutSocialAbout": "About Me",
-    "aboutSocialChat": "Chat Me (FB)",
     "presets": {
       "metaTitle": "Cloud PEQ Presets",
       "title": "☁ Cloud PEQ Presets",

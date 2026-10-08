@@ -141,7 +141,7 @@ python3 ops/check_classes.py
 
 - Two locales: `id` (Indonesian, **fallback**) and `en` —
   `src/locales/id.json`, `src/locales/en.json`. Keep them at key parity;
-  the tests fail on leaked/unresolved keys. (653 keys since the
+  the tests fail on leaked/unresolved keys. (645 keys since the
   portfolio split — the portfolio repo keeps its own 112.)
 - Initial locale: `localStorage.locale` → browser language → `id`
   (`src/i18n.ts`).

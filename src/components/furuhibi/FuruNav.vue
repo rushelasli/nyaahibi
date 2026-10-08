@@ -32,7 +32,6 @@ const links = computed(() => [
   { href: `${props.anchorBase}#software`, key: 'furuhibi.nav.software' },
   { href: `${props.anchorBase}#dsp`, key: 'furuhibi.nav.dsp' },
   { href: props.downloadHref, key: 'furuhibi.nav.downloads' },
-  { href: `${props.anchorBase}#about`, key: 'furuhibi.nav.about' },
 ])
 </script>
 
