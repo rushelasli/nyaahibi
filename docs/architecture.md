@@ -63,7 +63,7 @@ The boundary:
 | --- | --- | --- |
 | Entries | `hub.html`, `main.html` | `index.html` + vue-router |
 | Pages | `src/hub/*`, 5 detail pages, 2 FuruHibi sub-pages, `project/` + `furuhibi/` sections | home page + profile sections, `ui/` components |
-| Locale keys | `nav`, `footer`, `hub.*`, `dash.*`, `main.*`, per-project namespaces (645 keys) | `meta`, `nav`, `common`, profile namespaces (112 keys) |
+| Locale keys | `nav`, `footer`, `hub.*`, `dash.*`, `main.*`, per-project namespaces (635 keys) | `meta`, `nav`, `common`, profile namespaces (112 keys) |
 | Registry | `hubSites` + base URLs | `projectLinks` + base URLs |
 | Build | `bun run build:hub` → `dist-hub/` | `bun run build` → `dist/` |
 | Deploy | `ops/deploy.ps1` → `C:\srv\sites\projects` | its own `ops/deploy.ps1` → `C:\srv\sites\hibi` |

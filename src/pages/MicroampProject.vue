@@ -31,7 +31,7 @@ const infoParagraphs = [
 <template>
   <main>
     <ProjectHero ns="microamp" :back-href="backHref" />
-    <ProjectAbout ns="microamp" image="/projects/microamp/maskot.jpg" />
+    <ProjectAbout ns="microamp" />
 
     <ProjectTextSection
       eyebrow-key="microamp.infoEyebrow"

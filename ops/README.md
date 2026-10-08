@@ -138,8 +138,10 @@ C:\srv\sites\projects        served hub:
   the box's `dash/` folder — its GLBs, `gwe.png`, and `comingsoon.html`
   stay box-side (`/XD dash` protects them from the root mirror).
 - Mascots (`maskotkiri.png` / `maskotkanan.png`) and `logo.png` live in
-  `public/` and ship with the hub build; project images and GLB models
-  come from `public/projects/` (served as `/projects/...` on the hub).
+  `public/` and ship with the hub build; the mascots render only on the
+  two home pages (`LandingMascots.vue`, gated in `HubApp`). Project
+  images and GLB models come from `public/projects/` (served as
+  `/projects/...` on the hub).
 
 ## Migrating a live site's card to the hub
 

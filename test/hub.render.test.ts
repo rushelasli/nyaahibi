@@ -190,11 +190,13 @@ const detailPages: Record<string, string> = {
   furuhibi: 'furuhibi',
 }
 
-// One content marker per page — an asset path only that page renders.
+// One content marker per page — an asset path or unique href only that
+// page renders (microamp's mascot photo was dropped with the others, so
+// its marker is the PSU reference link).
 const detailMarkers: Record<string, string> = {
   nyaahibiamp: '/projects/nyaahibiamp/block_amp.png',
   nyaahibiv2: '/projects/amp/TopologiAmp.png',
-  microhibiamp: '/projects/microamp/maskot.jpg',
+  microhibiamp: 'https://www.edukasielektronika.com/2015/03/power-amplifier-ocl-150-watt.html',
   tubeseamp: '/projects/tubeseamp/tubese.glb',
   furuhibi: '/furuhibi/dsp',
 }
@@ -228,11 +230,9 @@ for (const [slug, ns] of Object.entries(detailPages)) {
       const attrLeak = html.match(ATTR_KEY_LEAK)
       if (attrLeak) failures.push(`${tag}: unresolved key in attribute -> ${attrLeak[0]}`)
 
-      // Shared chrome survives the page swap
+      // Shared chrome survives the page swap (the mascots are checked
+      // globally below — they only belong to the two home pages)
       if (!html.includes('/logo.png')) failures.push(`${tag}: navbar logo missing`)
-      if (!html.includes('/maskotkiri.png') || !html.includes('/maskotkanan.png')) {
-        failures.push(`${tag}: mascot images missing`)
-      }
       if (!rendered(html, i18n.global.t('nav.theme'))) failures.push(`${tag}: theme toggle missing`)
       if (!rendered(html, i18n.global.t('nav.languageToggle'))) {
         failures.push(`${tag}: language toggle missing`)
@@ -440,10 +440,16 @@ for (const locale of ['id', 'en'] as const) {
     const attrLeak = html.match(ATTR_KEY_LEAK)
     if (attrLeak) failures.push(`${tag}: unresolved key in attribute -> ${attrLeak[0]}`)
 
-    // Shared chrome survives the page swap
+    // Shared chrome survives the page swap — and the apex home is one of
+    // the two pages that keep the pinned side mascots
     if (!html.includes('/logo.png')) failures.push(`${tag}: navbar logo missing`)
+    if (!html.includes('/maskotkiri.png') || !html.includes('/maskotkanan.png')) {
+      failures.push(`${tag}: mascot images missing on the main home`)
+    }
     if (!rendered(html, i18n.global.t('nav.theme'))) failures.push(`${tag}: theme toggle missing`)
-    if (!rendered(html, i18n.global.t('nav.languageToggle'))) failures.push(`${tag}: language toggle missing`)
+    if (!rendered(html, i18n.global.t('nav.languageToggle'))) {
+      failures.push(`${tag}: language toggle missing`)
+    }
 
     // Explainer copy, section by section
     if (!html.includes('id="main-hero"')) failures.push(`${tag}: hero section missing`)
@@ -484,6 +490,16 @@ for (const locale of ['id', 'en'] as const) {
 for (const [tag, html] of [...Object.entries(outputs), ...Object.entries(detailOutputs)]) {
   const leak = html.match(/href="\/furuhibi\/[^"]*\.html"/)
   if (leak) failures.push(`${tag}: legacy .html furuhibi link rendered -> ${leak[0]}`)
+}
+
+// The pinned mascots belong to the two home pages only: every other view
+// (detail pages, dashboard, sub-pages) must render without them. The hub
+// landing asserts them up top; main:* is the apex home and is skipped.
+for (const [tag, html] of Object.entries(detailOutputs)) {
+  if (tag.startsWith('main:')) continue
+  if (html.includes('/maskotkiri.png') || html.includes('/maskotkanan.png')) {
+    failures.push(`${tag}: mascots must only render on the home pages`)
+  }
 }
 
 // Per page, the two locales must produce genuinely different HTML

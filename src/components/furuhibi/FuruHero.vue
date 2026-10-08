@@ -35,50 +35,36 @@ const { t } = useI18n()
         {{ t('furuhibi.back') }}
       </component>
 
-      <div class="flex flex-col-reverse items-center gap-10 md:flex-row md:items-start md:gap-12">
-        <div class="w-full flex-1">
-          <p class="mb-4 font-mono text-[13px] uppercase tracking-[0.2em] text-primary">
-            {{ t('furuhibi.headerEyebrow') }}
-          </p>
-          <p class="mb-3 font-mono text-[13px] text-subtle-foreground">
-            {{ t('furuhibi.heroMark') }}
-          </p>
-          <h1
-            class="mb-4 text-3xl font-semibold leading-[1.15] tracking-tight text-foreground md:text-4xl"
-            v-html="t('furuhibi.heroTitle')"
-          />
-          <p class="max-w-lg text-[17px] leading-relaxed text-muted-foreground">
-            {{ t('furuhibi.heroSub') }}
-          </p>
+      <div>
+        <p class="mb-4 font-mono text-[13px] uppercase tracking-[0.2em] text-primary">
+          {{ t('furuhibi.headerEyebrow') }}
+        </p>
+        <p class="mb-3 font-mono text-[13px] text-subtle-foreground">
+          {{ t('furuhibi.heroMark') }}
+        </p>
+        <h1
+          class="mb-4 text-3xl font-semibold leading-[1.15] tracking-tight text-foreground md:text-4xl"
+          v-html="t('furuhibi.heroTitle')"
+        />
+        <p class="max-w-lg text-[17px] leading-relaxed text-muted-foreground">
+          {{ t('furuhibi.heroSub') }}
+        </p>
 
-          <div class="mt-7 flex flex-wrap gap-3">
-            <a
-              href="#products"
-              class="inline-flex items-center rounded-lg bg-primary px-5 py-2.5 text-[14px] font-medium text-primary-foreground transition-colors hover:bg-[#7d6ef0]"
-            >
-              {{ t('furuhibi.ctaPrimary') }}
-            </a>
-            <a
-              :href="dspHref"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center rounded-lg border border-foreground/15 px-5 py-2.5 text-[14px] font-medium text-foreground/90 transition-colors hover:border-foreground/30 hover:text-foreground"
-            >
-              {{ t('furuhibi.ctaSecondary') }}
-            </a>
-          </div>
-        </div>
-
-        <div class="shrink-0 text-center">
-          <img
-            src="/projects/furuhibi/maskot.jpg"
-            :alt="t('furuhibi.mascotAlt')"
-            class="w-52 rounded-xl border border-foreground/10 md:w-60"
-            loading="lazy"
-          />
-          <p class="mt-2 font-mono text-[13px] text-subtle-foreground">
-            {{ t('furuhibi.mascotCaption') }}
-          </p>
+        <div class="mt-7 flex flex-wrap gap-3">
+          <a
+            href="#products"
+            class="inline-flex items-center rounded-lg bg-primary px-5 py-2.5 text-[14px] font-medium text-primary-foreground transition-colors hover:bg-[#7d6ef0]"
+          >
+            {{ t('furuhibi.ctaPrimary') }}
+          </a>
+          <a
+            :href="dspHref"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center rounded-lg border border-foreground/15 px-5 py-2.5 text-[14px] font-medium text-foreground/90 transition-colors hover:border-foreground/30 hover:text-foreground"
+          >
+            {{ t('furuhibi.ctaSecondary') }}
+          </a>
         </div>
       </div>
     </div>

@@ -6,6 +6,7 @@ import LocaleToggle from '@/components/LocaleToggle.vue'
 import HubLanding from '@/hub/HubLanding.vue'
 import MainLanding from '@/hub/MainLanding.vue'
 import DashboardPage from '@/hub/DashboardPage.vue'
+import LandingMascots from '@/components/hub/LandingMascots.vue'
 import { hubSites, PORTFOLIO_BASE, type HubSite } from '@/data/projects'
 import AmpProject from '@/pages/AmpProject.vue'
 import AmpGen1Project from '@/pages/AmpGen1Project.vue'
@@ -102,6 +103,10 @@ const subPage = computed<DetailPage | null>(() => subPages[detailPath.value] ?? 
 /** The rebuilt dashboard — vite.hub.config writes dist-hub/dash/index.html. */
 const isDash = computed(() => detailPath.value === '/dash')
 
+/** The two home pages (hub root / apex root) — detail pages, the
+ *  dashboard and the sub-pages render without the pinned mascots. */
+const isLanding = computed(() => !isDash.value && !subPage.value && !detailEntry.value)
+
 function syncDocumentMeta() {
   document.documentElement.lang = locale.value
   const detail = detailSite.value
@@ -123,19 +128,8 @@ watch(locale, syncDocumentMeta)
 
 <template>
   <div class="min-h-screen bg-background font-sans text-foreground/95 antialiased">
-    <!-- Mascots stay pinned to the sides while scrolling; both face inward -->
-    <img
-      src="/maskotkiri.png"
-      alt=""
-      aria-hidden="true"
-      class="pointer-events-none fixed bottom-0 left-0 z-0 hidden max-h-[70vh] max-w-[16vw] w-auto -scale-x-100 select-none object-contain object-bottom xl:block"
-    />
-    <img
-      src="/maskotkanan.png"
-      alt=""
-      aria-hidden="true"
-      class="pointer-events-none fixed bottom-0 right-0 z-0 hidden max-h-[70vh] max-w-[16vw] w-auto select-none object-contain object-bottom xl:block"
-    />
+    <!-- Mascots — home pages only; see LandingMascots -->
+    <LandingMascots v-if="isLanding" />
 
     <div class="relative z-10 flex min-h-screen flex-col">
       <header class="sticky top-0 z-50 border-b border-foreground/10 bg-background/90 backdrop-blur">

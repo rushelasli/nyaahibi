@@ -29,7 +29,7 @@ const modelFiles = ['/projects/tubeseamp/tubese.glb']
 <template>
   <main>
     <ProjectHero ns="tubese" :back-href="backHref" />
-    <ProjectAbout ns="tubese" image="/projects/tubeseamp/maskot.jpg" />
+    <ProjectAbout ns="tubese" />
 
     <ProjectTextSection
       eyebrow-key="tubese.infoEyebrow"

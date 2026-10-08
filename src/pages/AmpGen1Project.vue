@@ -23,7 +23,7 @@ const psuBlocks = computed(() => tm('ampgen1.psuBlocks') as unknown as BlockItem
 <template>
   <main>
     <ProjectHero ns="ampgen1" :back-href="backHref" />
-    <ProjectAbout ns="ampgen1" image="/projects/nyaahibiamp/maskot.png" />
+    <ProjectAbout ns="ampgen1" />
 
     <BlockDiagramSection
       eyebrow-key="ampgen1.topologyEyebrow"
